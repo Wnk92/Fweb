@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <head>
+        <title>Inicio Sesión</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon" href="resources/images/paginainicio/logourl.jpg" type="image/x-icon"/>
+
+        <link href="resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/login.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/cards.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/torneo.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div class="main" style="padding:2%;margin-top:5%;">        	
+            <div class="col-lg-12">
+                <div class="container">
+
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <div class="col-md-5 col-sm-6">
+                                <div class="card-container">
+                                    <div class="card">
+                                        <div class="front">
+                                            <div class="cover">
+
+                                            </div>
+                                            <div class="user">
+                                                <img class="img-circle" src="resources/images/paginainicio/Logo.png"/>
+                                            </div>
+                                            <div class="content">
+                                                <div class="main">
+                                                    <h3 class="name">Observaciones </h3>
+                                                    <p class="profession">Pasos a tener en cuenta antes de <strong>iniciar sesión</strong></p>
+                                                    <p class="text-center"></p>
+                                                </div>
+                                                <div class="footer">
+                                                    <div class="rating">
+                                                        <i class="fa fa-mail-forward"></i> Rota Automaticamente
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end front panel -->
+                                        <div class="back">
+                                            <div class="header">
+                                                <h5 class="motto">Pasos para iniciar sesión</h5>
+                                            </div>
+                                            <div class="content">
+                                                <div class="main">
+
+                                                    <ul>
+                                                        <li>1: Hacer los pagos en el club ya sea matriculas o mensualidades.  </li>
+                                                        <hr />
+                                                        <li>2: Haberse <a href="registro_usuario.xhtml" class="lnk-success">Registrado</a> en nuestra página oficial y esperar el correo de ´Cambio de rol ó estado´
+                                                            .</li>
+                                                        <hr />
+                                                        <li>3: Recuerda que para iniciar sesión solo  necesita el <strong>documento de identificación</strong> y <strong>contraseña</strong> 
+                                                        </li>
+                                                        <hr />
+
+                                                        <li>4: Cualquier duda <a href="registro_usuario.xhtml" class="lnk-success">Comunicarse</a> en nuestra sección de Contacto </li>
+                                                        <hr />
+
+
+                                                    </ul>
+
+
+
+                                                    <br/>
+                                                    <br></br>   
+                                                    <a href="pagina_principal.xhtml" class="btn btn-outline btn-success"><span class="fa fa-home"></span>Página principal</a>
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="footer">
+                                                <div class="social-links text-center">
+                                                    <a href="http://deepak646.blogspot.in/" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
+                                                    <a href="http://deepak646.blogspot.in/" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
+                                                    <a href="http://deepak646.blogspot.in/" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end back panel -->
+                                    </div> <!-- end card -->
+                                </div> <!-- end card-container -->
+                            </div>
+
+
+
+                            <div class="col-md-7 col-sm-8">
+                                <div class="card-container">
+                                    <div class="card">
+                                        <div class="front">
+                                            <div class="cover">
+
+                                            </div>
+                                            <div class="user">
+                                                <img class="img-circle" src="resources/images/paginainicio/Logo.png"/>
+                                            </div>
+                                            <div class="content">
+                                                <div class="main">
+                                                    <h3 class="name">Ingresar al sistema </h3>
+                                                    <p class="profession"></p>
+
+                                                    <p class="text-center"></p>
+                                                </div>
+                                                <div class="footer">
+                                                    <div class="rating">
+                                                        <i class="fa fa-mail-forward"></i> Rotar Automaticament
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end front panel -->
+                                        <div class="back">
+                                            <div class="header">
+                                                <h4 class="text-center">Ingresar</h4>
+                                            </div>
+                                            <div class="content">
+
+                                                <div class="main">
+                                                    <h:form>
+                                                        <script>
+                                                            function valida(e) {
+                                                                tecla = (document.all) ? e.keyCode : e.which;
+
+                                                                //Tecla de retroceso para borrar, siempre la permite
+                                                                if (tecla == 8) {
+                                                                    return true;
+                                                                }
+
+                                                                // Patron de entrada, en este caso solo acepta numeros
+                                                                patron = /[0-9]/;
+                                                                tecla_final = String.fromCharCode(tecla);
+                                                                return patron.test(tecla_final);
+                                                            }
+                                                        </script>
+                                                        <h:inputText   maxlength="11"  onkeypress="return valida(event)" p:placeholder="Documento Ej: 123456789 " id="documento" value="#{loginManagedBean.documento}"/>
+
+                                                        <h:inputText maxlength="50" p:type="password" p:placeholder="Contraseña Ej: *********72 "  id="clave" value="#{loginManagedBean.clave}" title="Clave" />
+                                                        <h:commandButton value="Iniciar sesión" action="#{loginManagedBean.iniciarSesion()}"/>
+
+
+                                                        <div class="clearfix"></div>
+                                                    </h:form>
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="footer">
+                                                <div class="social-links text-center">
+                                                    <a href="http://deepak646.blogspot.in/" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
+                                                    <a href="http://deepak646.blogspot.in/" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
+                                                    <a href="http://deepak646.blogspot.in/" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end back panel -->
+                                    </div> <!-- end card -->
+                                </div> <!-- end card-container -->
+                            </div>
+
+
+                            <h:messages globalOnly="true" showSummary="true"/>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

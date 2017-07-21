@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <title>jQuery UI Datepicker - Icon trigger</title>
+        <link type="text/css" href="css/ui-darkness/jquery-ui-1.8.23.custom.css" rel="Stylesheet" />
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="content">
+
+
+                <!-- Sidebar -->
+
+                <!-- /#sidebar-wrapper -->
+
+                <!-- Page Content -->
+                <div class="rowContainer">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <br></br>
+
+
+                        <header>
+                            <h1 class="page-header text-center">Torneos</h1>
+                        </header>
+                        <center>
+                            <p>Registre los torneos en los cuales participará el equipo</p>        
+                            <br></br>
+
+
+                            
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a role="button" class="btn btn-outline btn-success"  action="#{torneoManagedBean.redireccionarTorneo(item)}" onclick="PF('formCreate').show();" update=":fCreate">Registrar torneo</a>
+                                        <div aria-hidden="true">
+                                            <p:dialog class="form-control" widgetVar="formCreate"
+                                                      modal="true"
+                                                      position="top"
+
+                                                      >
+
+                                                <div class="modal-body">
+
+                                                    <h:form id="fCreate" jsf:name="crear" onsubmit="return validarFormulario()">
+
+                                                        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
+
+                                                        <center><h2><h:outputText value="Registro de Torneos"/></h2></center>
+
+                                                        <br/>
+                                                        <div class="rowContainer">
+
+                                                            <h:outputLabel  value="Nombre del Torneo"/>
+
+                                                            <h:inputText  maxlength="23" class="form-control" id="nombreTorneo" value="#{torneoManagedBean.torneo.nombreTorneo}" title="Nombre delTorneo" required="true" requiredMessage="The IdTorneo field is required."/>
+
+
+                                                            <h:outputLabel value="Inicio"/>
+                                                            <br/>
+
+                                                            <h:inputText   jsf:data-language='es'  class="form-control datepicker-here" id="start" value="#{torneoManagedBean.torneo.fechaInicio}" title="FechaInicio" required="true" requiredMessage="The FechaInicio field is required.">
+                                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                            </h:inputText>
+
+
+                                                            <br/>
+                                                            <h:outputLabel value="Finalización"/>
+                                                            <br/>
+                                                            <h:inputText jsf:data-language='es'   class="form-control datepicker-here" id="end" value="#{torneoManagedBean.torneo.fechaFin}" title="FechaFin" required="true" requiredMessage="The FechaInicio field is required.">
+                                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                            </h:inputText>
+
+
+                                                            <h:outputLabel value="Organizador"/>
+
+                                                            <h:inputText maxlength="24" class="form-control" id="organizador" value="#{torneoManagedBean.torneo.organizador}" title="Organizador" required="true" requiredMessage="The Organizador field is required."/>
+
+                                                            <h:outputLabel value="Contacto del organizador"/>
+
+                                                            <h:inputTextarea class="form-control" rows="4" cols="30" id="datosContactoOrganizador" value="#{torneoManagedBean.torneo.datosContactoOrganizador}" title="DatosContactoOrganizador" required="true"  requiredMessage="The DatosContactoOrganizador field is required."/>
+
+
+                                                        </div>
+                                                        <br/>
+                                                        <br/>
+                                                        <h:commandButton class="btn btn-outline btn-success" value="Registrar" action="#{torneoManagedBean.create()}"/>
+
+
+                                                       
+                                                        <script>
+
+                                                            $("#fechaInicio").datepicker({
+                                                                dateFormat: 'mm/dd/yyyy'
+                                                            });
+                                                        </script>
+
+                                                    </h:form>
+
+                                                </div>
+
+                                            </p:dialog>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </center>
+
+                        <h:form id="dqw">
+
+
+
+                            <table id="table-transform"  value="#{torneoManagedBean.listar()}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
+                                <thead>
+
+                                    <tr >
+                                        <th class="col-md-4"><center><em class="fa fa-cog">Editar/Eliminar</em></center></th>
+
+                                        <th class="hidden-xs">Nombre</th>
+
+                                        <th class="hidden-xs">Organizador</th>
+
+                                        <th class="hidden-xs">Datos del organizador</th>
+
+                                        <th class="hidden-xs">Inicio</th>
+
+                                        <th class="hidden-xs">Finalización</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <ui:repeat  value="#{torneoManagedBean.listar()}" var="item">
+
+
+                                        <tr>
+                                            <td  class="hidden-xs" align="center">
+                                                <p:commandButton class="btn btn-outline btn-warning" value="e" action="#{torneoManagedBean.redireccionarTorneo(item)}" onclick="PF('formEdit').show();" update=":fEdit"/>
+
+                                                <p:commandButton class="btn btn-outline btn-danger" ajax="false"  value="e" action="#{torneoManagedBean.eliminarTorneo(item)}" onclick="javascript:return confirmar()" update=":fEdit"/>
+                                            </td>
+
+
+                                            <td class="hidden-xs" >#{item.nombreTorneo}</td>
+
+                                            <td class="hidden-xs">#{item.organizador}</td>
+
+                                            <td class="hidden-xs">#{item.datosContactoOrganizador}</td>
+
+                                            <td class="hidden-xs">
+                                                <h:outputText value="#{item.fechaInicio}">
+                                                    <f:convertDateTime pattern="dd-MM-yyyy">
+
+                                                    </f:convertDateTime>
+                                                </h:outputText></td>
+
+                                            <td class="hidden-xs">
+                                                <h:outputText value="#{item.fechaFin}">
+                                                    <f:convertDateTime pattern="dd-MM-yyyy">
+
+                                                    </f:convertDateTime>
+                                                </h:outputText></td>
+
+                                        </tr>
+                                    </ui:repeat>
+
+                                </tbody>
+                            </table>
+                            <br></br>
+                            <h:commandLink title="Descargar tabla en pdf">
+                                <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
+                                <p:dataExporter type="pdf" target="tabCat" fileName="ListadoDeCategorias"/>
+                            </h:commandLink>
+                            <h:commandLink title="Descargar tabla en Excel">
+                                <img  src="../../resources/images/pdf/excel.png" alt="Descargar en Ecxel" style="width: 55px; height: 55px;"/>
+                                <p:dataExporter type="xls" target="tabCat" fileName="ListadoDeCategorias"/>
+                            </h:commandLink>
+
+                            <script language="JavaScript">
+                                function confirmar()
+                                {
+                                    if (!confirm("¿Deseas eliminar este registro?"))
+                                    {
+                                        return false;
+                                    } else
+                                    {
+
+                                        return true;
+                                    }
+                                }
+                            </script>
+
+                        </h:form>
+
+
+                        <br/>
+                        <div aria-hidden="true">
+                            <p:dialog class="form-control" widgetVar="formEdit"
+                                      modal="true"
+                                      position="top"
+                                      resizable="false"
+                                      draggable="true"
+                                      closable="true">
+
+
+                                <div class="modal-header">
+                                    <center><h2>Modificar torneo</h2></center>
+
+                                    <f:view>
+
+
+                                        <h:form id="fEdit">
+
+
+                                            <h:outputLabel style="visibility:hidden;" value="IdTorneo:" for="idTorneo" />
+                                            <h:inputText style="visibility:hidden;" id="idTorneo" value="#{torneoManagedBean.torneo.idTorneo}" title="IdTorneo" required="true" requiredMessage="The IdTorneo field is required."/>
+                                            <br/>
+                                            <h:outputLabel   value="Nombre:" for="nombreTorneo" />
+                                            <h:inputText class="form-control" id="nombreTorneo" value="#{torneoManagedBean.torneo.nombreTorneo}" title="NombreTorneo" required="true" requiredMessage="The NombreTorneo field is required."/>
+                                            <br/>
+                                            <h:outputLabel value="Organizador:" for="organizador" />
+                                            <h:inputText  class="form-control" id="organizador" value="#{torneoManagedBean.torneo.organizador}" title="Organizador" required="true" requiredMessage="The Organizador field is required."/>
+                                            <br/>
+                                            <h:outputLabel value="Datos de contacto:" for="datosContactoOrganizador" />
+                                            <h:inputTextarea  class="form-control" rows="4" cols="30" id="datosContactoOrganizador" value="#{torneoManagedBean.torneo.datosContactoOrganizador}" title="DatosContactoOrganizador" required="true" requiredMessage="The DatosContactoOrganizador field is required."/>
+                                            <br/>
+                                            <h:outputLabel value="Inicio:" for="fechaInicio" />
+                                            <h:inputText jsf:data-language='es'  class="form-control datepicker-here" id="fechaInicio" value="#{torneoManagedBean.torneo.fechaInicio}" title="FechaInicio" required="true" requiredMessage="The FechaInicio field is required.">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:inputText>
+                                            <br/>
+                                            <h:outputLabel value="Finalización:" for="fechaFin" />
+                                            <h:inputText jsf:data-language='es'  class="form-control datepicker-here" id="fechaFin" value="#{torneoManagedBean.torneo.fechaFin}" title="FechaFin" required="true" requiredMessage="The FechaFin field is required.">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:inputText>
+                                            <br/>
+                                            <br/>
+                                            <center>
+                                                <h:commandButton class="btn btn-outline btn-success" value="Guardar cambios" action="#{torneoManagedBean.guardarCambiosTorneo(torneoManagedBean.torneo)}" onclick="PF('formEdit').hide()"/>
+
+                                            </center>   
+                                            <script>
+
+                                                $("#fechaInicio").datepicker,
+                                                        $("#fechaFin").datepicker({
+                                                    dateFormat: 'mm/dd/yyyy'
+                                                });
+                                            </script>
+                                        </h:form>
+                                    </f:view>
+
+
+                                </div>
+
+                            </p:dialog>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1"></div>
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

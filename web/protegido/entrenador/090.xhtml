@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="content">
+
+               
+                   <f:view>
+
+
+                       <h:form id="formValoracion">
+                           <h:panelGroup id="tabla" layout="block">
+                           <h1><h:outputText value="List"/></h1>
+                           <p:dataTable value="#{valoracionManagedBean.listarValoracion2()}" var="item">
+                              
+                               <p:column>
+                                   <f:facet name="header">
+                                       <h:outputText value="Item"/>
+                                   </f:facet>
+                                   <h:outputText value="#{item.idItem.descripcion}"/>
+                               </p:column>
+                               <p:column>
+                                   <f:facet name="header">
+                                       <h:outputText value="Nota"/>
+                                   </f:facet>
+                                   <h:outputText value="#{item.nota}"/>
+                               </p:column>
+                              
+                               <p:column>
+                                   <h:selectOneMenu class="form-control" id="nota" value="#{valoracionManagedBean.nota}" required="true" requiredMessage="El campo 'Estado' es requerido">
+                                       <f:selectItem itemDisabled="" itemLabel="Seleccione"/>
+                                       <f:selectItem itemValue="1" itemLabel="1"/>
+                                       <f:selectItem itemValue="2" itemLabel="2"/>
+                                       <f:selectItem itemValue="3" itemLabel="3"/>
+                                       <f:selectItem itemValue="4" itemLabel="4"/>
+                                       <f:selectItem itemValue="5" itemLabel="5"/>
+                                       <f:ajax event="change" listener="#{valoracionManagedBean.modificarValoracion(item)}" execute="@this" render="formValoracion:tabla"/>
+                                   </h:selectOneMenu>
+                               </p:column>
+                           </p:dataTable>
+                           </h:panelGroup>
+                       </h:form>
+                   </f:view>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <style>
+	.tasks{
+	background-color: #F6F8F8;
+	padding: 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+.tasks span{
+	font-weight: bold;
+}
+.tasks input{
+	display: block;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+.tasks a{
+	color: #000;
+	text-decoration: none;
+	border:none;
+}
+.tasks a:hover{
+	border-bottom: dashed 1px #0088cc;
+}
+.tasks label{
+	display: block;
+	text-align: center;
+}
+</style>
+
+<div class="progress progress-striped active">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        </div>
+    </div>
+<div class="row tasks">
+        <div class="col-md-6">
+          <p><span>Identify your campaign audience.</span>Who are we talking to here? Understand your buyer persona before launching into a campaign, so you can target them correctly.</p>
+        </div>
+        <div class="col-md-2">
+          <label>2014-01-29</label>
+        </div>
+        <div class="col-md-2">
+          <input name="progress" class="progress" type="checkbox" value="30"/>
+        </div>
+        <div class="col-md-2">
+          <input name="done" class="done" type="checkbox" value="20"/>
+        </div>
+      </div><!-- tasks -->
+
+<div class="row tasks">
+        <div class="col-md-6">
+          <p><span>Set your goals + benchmarks</span>Having SMART goals can help you be
+sure that you’ll have tangible results to share with the world (or your
+boss) at the end of your campaign.</p>
+        </div>
+        <div class="col-md-2">
+          <label>2014-01-25</label>
+        </div>
+        <div class="col-md-2">
+          <input name="progress" class="progress" type="checkbox" value="30"/>
+        </div>
+        <div class="col-md-2">
+          <input name="done" class="done" type="checkbox" value="40"/>
+        </div>
+      </div><!-- tasks -->
+
+<script>
+	$('input').on('click', function(){
+  var valeur = 0;
+  $('input:checked').each(function(){
+       if ( $(this).attr('value') > valeur )
+       {
+           valeur =  $(this).attr('value');
+       }
+  });
+  $('.progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);    
+});
+</script>
+                
+                
+                
+                
+                
+                
+                
+                
+
+                
+                    
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

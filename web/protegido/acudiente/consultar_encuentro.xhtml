@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="content">
+
+                <div class="rowContainer">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <br></br>
+
+                        <header>
+                            <h1 class="page-header text-center">Encuentros</h1>
+                        </header>
+                        <h:form id="dqw">
+
+                            <table id="table-transform"  value="#{encuentroTorneoManagedBean.listar()}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
+                                <thead>
+
+                                    <tr >
+                                       
+                                        <th class="hidden-xs">Fecha</th>
+
+                                        <th class="hidden-xs">Resultado</th>
+
+                                        <th class="hidden-xs">Descripción</th>
+
+                                        <th class="hidden-xs">Torneo</th>
+
+                                        <th class="hidden-xs">Barrio</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <ui:repeat  value="#{encuentroTorneoManagedBean.listar()}" var="item">
+
+
+                                        <tr>
+
+                                             <td class="hidden-xs">
+                                            <h:outputText value="#{item.fechaInicio}">
+                                                <f:convertDateTime pattern="dd-MM-yyyy">
+
+                                                </f:convertDateTime>
+                                            </h:outputText></td>
+
+                                            <td>#{item.resultado}</td>
+
+                                            <td>#{item.descripcion}</td>
+
+                                            <td>#{item.fkIdTorneo.nombreTorneo}</td>
+
+                                            <td>#{item.fkIdBarrio.nombreBarrio}, #{item.fkIdBarrio.fkIdLocalidad.nombreLocalidad}</td>
+
+
+                                        </tr>
+                                    </ui:repeat>
+
+
+                                </tbody>
+                            </table>
+                            <br></br>
+                            <h:commandLink title="Descargar tabla en pdf">
+                                <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
+                                <p:dataExporter type="pdf" target="tabCat" fileName="ListadoDeCategorias"/>
+                            </h:commandLink>
+                            <h:commandLink title="Descargar tabla en Excel">
+                                <img  src="../../resources/images/pdf/excel.png" alt="Descargar en Ecxel" style="width: 55px; height: 55px;"/>
+                                <p:dataExporter type="xls" target="tabCat" fileName="ListadoDeCategorias"/>
+                            </h:commandLink>
+
+
+                        </h:form>
+
+
+                        <center> <h:outputText style="font-size: 20px;" value="Localidades con más torneos"/></center>
+
+                        <canvas id="bar-chart" width="3500" height="900"></canvas>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+                        <script>
+                            new Chart(document.getElementById("bar-chart"), {
+                                type: 'pie',
+                                data: {
+                                    labels: ["Suba", "Engativá", "Fontibón", "Kennedy", "Bosa"],
+                                    datasets: [
+                                        {
+                                            label: "Population (millions)",
+                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                            data: [#{encuentroTorneoManagedBean.listarSuba().size()}, #{encuentroTorneoManagedBean.listarEngativa().size()}, #{encuentroTorneoManagedBean.listarFontibon().size()}, #{encuentroTorneoManagedBean.listarKened().size()}, #{encuentroTorneoManagedBean.listarBosa().size()}]
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    legend: {display: false},
+                                    title: {
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+
+                </div>
+                <div class="col-lg-1"></div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
+

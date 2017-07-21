@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+          
+      xmlns:t="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+    
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="content">
+                
+
+                <!-- Sidebar -->
+
+                <!-- /#sidebar-wrapper -->
+
+                <!-- Page Content -->
+
+                <div class="rowContainer">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <br></br>
+
+                        <header>
+                            <h1 class="page-header text-center">Usuarios Invitados</h1>
+                        </header>
+                         <center>
+                             <p>Recuerde que al momento de cambiar el <b>Rol</b> o <b>Estado</b> del usuario este automáticamente desaparecerá del estado actual <b>En Espera.</b></p>        
+                        <br></br>
+                       
+                         
+
+                        </center>
+                          
+                        <h:form id="dqw">
+                           
+
+
+
+
+
+
+
+
+                            <table id="table-transform" value="#{usuarioManagedBean.invitado}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200, 300, 400, 500, 1000]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
+                                <thead>
+
+                                    <tr >
+                                             <th class="hidden-xs"><center><em class="fa fa-cog">icono</em></center></th>
+                                        <th class="hidden-xs">Option</th>
+                                        <th class="hidden-xs">Documento</th>
+                                         <th class="hidden-xs">Nombre</th>
+                                         <th class="hidden-xs">Apellido</th>
+                                         <th class="hidden-xs">Fecha Nacimiento</th>
+                                         <th class="hidden-xs">Correo</th>
+                                         <th class="hidden-xs">Rol</th>
+                                         <th class="hidden-xs">Estado</th>
+                                       
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <ui:repeat  value="#{usuarioManagedBean.invitado}" var="item">
+
+
+                                        <tr>
+                                            <td><h:inputText t:type="checkbox"></h:inputText></td>
+                                                  <td  class="hidden-xs" align="center">
+                                            <p:commandButton class="btn btn-outline btn-warning" action="#{usuarioManagedBean.verInvitado(item)}" value="E" onclick="PF('insertar').show();"  update=":editinvi"/>
+                                            <h:commandButton   class="btn btn-outline btn-danger" value="el" title="Eliminar" onclick="javascript:return confirmar()" action="#{usuarioManagedBean.eliminarUsuarioInvitadi(item)}"/>
+                                            </td>
+
+                                         
+                                            <td class="hidden-xs">#{item.documento}</td>
+                                            <td class="hidden-xs">#{item.primerNombre}</td>
+                                            <td class="hidden-xs">#{item.primerApellido}</td>
+                                            <td class="hidden-xs">
+                                                <h:outputText value="#{item.fechaDeNacimento}">
+                                                    <f:convertDateTime pattern="dd-MM-yyyy">
+                                                        
+                                                    </f:convertDateTime>
+                                                </h:outputText></td>
+                                            <td class="hidden-xs">#{item.correo}</td>
+                                            <td class="hidden-xs">#{item.idTipoRol.nombreRol}</td>
+                                            <td class="hidden-xs">#{item.idEstado.nombreEstado}</td>
+                                         
+
+
+
+                                        </tr>
+                                    </ui:repeat>
+
+
+
+
+
+
+
+                                </tbody>
+                            </table>
+                            <br></br>
+                             <h:commandLink title="Descargar tabla en pdf">
+                                <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
+                                <p:dataExporter type="pdf" target="tabCat" fileName="ListadoDeCategorias"/>
+                            </h:commandLink>
+                            <h:commandLink title="Descargar tabla en Excel">
+                                <img  src="../../resources/images/pdf/excel.png" alt="Descargar en Ecxel" style="width: 55px; height: 55px;"/>
+                                <p:dataExporter type="xls" target="tabCat" fileName="ListadoDeCategorias"/>
+                            </h:commandLink>
+
+
+
+
+                                <script language="JavaScript">
+                                function confirmar()
+                                {
+                                    if (!confirm("¿Deseas eliminar este registro?"))
+                                    {
+                                        return false;
+                                    } else
+                                    {
+
+                                        return true;
+                                    }
+                                }
+                            </script>
+                            
+                                  <script language="JavaScript">
+                                function confirmar2()
+                                {
+                                    if (!confirm("¿Deseas Cambiar de Rol y Estado a este usuario?"))
+                                    {
+                                        return false;
+                                    } else
+                                    {
+
+                                        return true;
+                                    }
+                                }
+                            </script>
+
+
+
+                         
+                        </h:form>
+                          <div aria-hidden="true">
+                                <p:dialog class="form-control"  widgetVar="insertar"
+                                          modal="true"
+                                          position="top"
+                                          resizable="false"
+                                          draggable="true"
+                                          closable="true">
+
+
+                                    <div class="modal-header">
+                                        <center><h3>Usuario Invitado</h3></center>
+                                        <h:form id="editinvi">
+
+
+                                            <p:outputLabel value="IdUsuario:" for="idUsuario" style="visibility:hidden" />
+                                            <p:inputText  style="visibility:hidden"  id="idUsuario" value="#{usuarioManagedBean.usuario.idUsuario}" title="IdUsuario" required="true" requiredMessage="The IdUsuario field is required."/>
+                                            <br/>
+                                            <p:outputLabel value="Documento:" for="documento" />
+                                            <h:inputText class="form-control" id="documento" value="#{usuarioManagedBean.usuario.documento}" title="Documento" required="true" requiredMessage="The Documento field is required."/>
+                                            <p:outputLabel value="Nombre:" for="primerNombre" />
+                                            <h:inputText class="form-control" id="primerNombre" value="#{usuarioManagedBean.usuario.primerNombre}" title="PrimerNombre" required="true" requiredMessage="The PrimerNombre field is required."/>
+                                            <p:outputLabel value="Apellido:" for="primerApellido" />
+                                            <h:inputText class="form-control" id="primerApellido" value="#{usuarioManagedBean.usuario.primerApellido}" title="PrimerApellido" required="true" requiredMessage="The PrimerApellido field is required."/>
+                                            <p:outputLabel style="visibility:hidden" value="Clave:" for="clave" />
+                                            <h:inputText  style="visibility:hidden" class="form-control" id="clave" value="#{usuarioManagedBean.usuario.clave}" title="Clave" required="true" requiredMessage="The Clave field is required."/>
+                                            <p:outputLabel value="Fecha Nacimento:" for="fechaDeNacimento" />
+                                            <h:inputText class="form-control" id="fechaDeNacimento" value="#{usuarioManagedBean.usuario.fechaDeNacimento}" title="FechaDeNacimento" required="true" requiredMessage="The FechaDeNacimento field is required.">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:inputText>
+                                            <p:outputLabel value="Correo:" for="correo" />
+                                            <h:inputText class="form-control" id="correo" value="#{usuarioManagedBean.usuario.correo}" title="Correo" required="true" requiredMessage="The Correo field is required."/>
+
+                                            <center>
+                                                <p:outputLabel value="Rol:" for="idTipoRol" />
+                                                <h:selectOneMenu class="form-control"  id="idTipoRol" value="#{usuarioManagedBean.usuario.idTipoRol}" required="true" requiredMessage="The IdTipoRol field is required.">
+                                                    <!-- TODO: update below reference to list of available items-->
+                                                    <f:selectItems value="#{rolManagedBean.listarRolUsuario()}" var="rol" itemLabel="#{rol.nombreRol}"/>
+                                                </h:selectOneMenu>
+
+                                                <p:outputLabel  value="Estado:" for="idEstado" />
+                                                <h:selectOneMenu class="form-control"  id="idEstado" value="#{usuarioManagedBean.usuario.idEstado}" required="true" requiredMessage="The IdEstado field is required.">
+                                                    <!-- TODO: update below reference to list of available items-->
+                                                    <f:selectItems value="#{estadoUsuarioManagedBean.listarEstadoUsuario()}" var="estado" itemLabel="#{estado.nombreEstado}"/>
+                                                </h:selectOneMenu>
+
+                                            </center>
+
+
+                                            <center>
+                                                <br/>
+                                                <h:commandButton actionListener="#{usuarioManagedBean.redireccionarUsuarioInvitado()}" onclick="javascript:return confirmar2()"  class="btn btn-outline btn-success" value="Activar usuario" action="#{usuarioManagedBean.editarInvitados()}" />
+
+                                            </center>
+
+
+                                        </h:form>
+
+                                    </div>
+                                </p:dialog>
+                            </div>
+                   
+
+                  
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

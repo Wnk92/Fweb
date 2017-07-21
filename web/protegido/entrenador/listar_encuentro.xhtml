@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="content">
+
+                <!-- Sidebar -->
+
+                <!-- /#sidebar-wrapper -->
+
+                <!-- Page Content -->
+
+                <div class="rowContainer">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <br></br>
+
+                        <header>
+                            <h1 class="page-header text-center">Encuentros</h1>
+                        </header>
+                        <center>
+                            <p>Registre los barrios en los cuales se disputarán los partidos de los diferentes torneos. </p>        
+                            <br></br>
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a role="button" class="btn btn-outline btn-success"  action="#{encuentroTorneoManagedBean.redireccionarEncuentroTorneo(item)}" onclick="PF('formCreate').show();" update=":fCreate">Registrar encuentro</a>
+
+                                        <div aria-hidden="true">
+                                            <p:dialog class="form-control" widgetVar="formCreate"
+                                                      modal="true"
+                                                      position="top"
+
+                                                      >
+
+                                                <div class="modal-body">
+
+                                                    <h:form id="fCreate">
+                                                        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
+
+                                                        <center><h1><h:outputText value="Registro de Encuentros"/></h1></center>
+
+                                                        <br/>
+                                                        <div class="rowContainer">
+                                                            <h:outputLabel value="Barrio"/>
+
+                                                            <h:selectOneMenu class="form-control" id="fkIdBarrio" value="#{encuentroTorneoManagedBean.encuentroTorneo.fkIdBarrio}" title="FkIdBarrio"  required="true" requiredMessage="Campo requerido">
+                                                                <f:selectItem itemValue="#{null}" itemLabel="--seleccione--" />
+                                                                <!-- TODO: update below reference to list of available items-->
+                                                                <f:selectItems value="#{barrioManagedBean.listar()}" var="lisbar" itemLabel="#{lisbar.nombreBarrio}"/>
+                                                            </h:selectOneMenu>
+
+                                                            <h:outputLabel value="Torneo"/>
+
+                                                            <h:selectOneMenu class="form-control" id="fkIdTorneo" value="#{encuentroTorneoManagedBean.encuentroTorneo.fkIdTorneo}" title="FkIdTorneo" required="true" requiredMessage="Campo requerido">
+                                                                 <f:selectItem itemValue="#{null}" itemLabel="--seleccione--" />
+                                                                <!-- TODO: update below reference to list of available items-->
+                                                                <f:selectItems value="#{torneoManagedBean.listar()}" var="listor" itemLabel="#{listor.nombreTorneo}"/>
+                                                            </h:selectOneMenu>
+
+
+                                                            <h:outputLabel  value="Fecha del encuentro"/>
+                                                            <br/>
+
+                                                            <h:inputText jsf:data-language='es'  class="form-control datepicker-here" id="fechaInicio" value="#{encuentroTorneoManagedBean.encuentroTorneo.fechaInicio}" title="FechaInicio" required="true" requiredMessage="Campo requerido">
+                                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                            </h:inputText>
+
+
+                                                            <br/>
+
+                                                            <h:outputLabel value="Equipo rival"/>
+
+                                                            <h:inputText  class="form-control" value="#{encuentroTorneoManagedBean.encuentroTorneo.descripcion}" title="Descripcion" required="true" requiredMessage="Campo requerido"/>
+
+                                                            <h:outputLabel value="Resultado"/>
+
+                                                            <h:inputText jsf:placeholder="0-0" onkeypress="return validar(event)"  class="form-control" value="#{encuentroTorneoManagedBean.encuentroTorneo.resultado}" title="Resultado" required="true" requiredMessage="Campo requerido"/>
+
+
+
+                                                        </div> 
+                                                        <br/>
+                                                        <p:commandButton class="btn btn-outline btn-success" value="Registrar" actionListener="#{encuentroTorneoManagedBean.crear()}" action="#{encuentroTorneoManagedBean.redireccionar()}" update="growl" />
+
+
+                                                        <script>
+
+                                                            $("#fechaInicio").datepicker({
+                                                                dateFormat: 'mm/dd/yyyy'
+                                                            });
+                                                        </script>
+                                                        <script type="text/javascript">
+                                                            function validar(e) { // 1
+                                                                tecla = (document.all) ? e.keyCode : e.which; // 2
+                                                                if (tecla == 8)
+                                                                    return true; // 3
+                                                                patron = /[1234567890-]/; // 4
+                                                                te = String.fromCharCode(tecla); // 5
+                                                                return patron.test(te); // 6
+                                                            }
+                                                        </script>
+
+
+                                                    </h:form>
+
+                                                    <br/> 
+                                                    <br/>
+
+                                                </div> 
+
+
+
+                                            </p:dialog> 
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </center>
+
+                        <h:form id="dqw" jsf:name="formulario">
+
+
+                            <table id="table-transform"  value="#{encuentroTorneoManagedBean.listar()}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
+                                <thead>
+
+                                    <tr >
+                                        <th class="col-md-4"><center><em class="fa fa-cog">Editar/Eliminar</em></center></th>
+
+                                        <th class="hidden-xs">Fecha</th>
+
+                                        <th class="hidden-xs">Resultado</th>
+                                        
+                                        <th class="hidden-xs">Equipo rival</th>
+
+                                        <th class="hidden-xs">Torneo</th>
+
+                                        <th class="hidden-xs">Barrio</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <ui:repeat  value="#{encuentroTorneoManagedBean.listar()}" var="item">
+
+
+                                        <tr>
+                                            <td  class="hidden-xs" align="center">
+                                                <p:commandButton class="btn btn-outline btn-warning" value="e" action="#{encuentroTorneoManagedBean.redireccionarEncuentroTorneo(item)}" onclick="PF('formEdit').show();" update=":fEdit"/>
+
+                                                <p:commandButton class="btn btn-outline btn-danger" ajax="false"  value="e" action="#{encuentroTorneoManagedBean.eliminar(item)}" onclick="javascript:return confirmar()" update=":fEdit"/>
+                                            </td>
+
+
+                                            <td class="hidden-xs">
+                                                <h:outputText value="#{item.fechaInicio}">
+                                                    <f:convertDateTime pattern="dd-MM-yyyy">
+
+                                                    </f:convertDateTime>
+                                                </h:outputText></td>
+
+                                            <td class="hidden-xs">#{item.resultado}</td>
+
+                                            <td class="hidden-xs">#{item.descripcion}</td>
+
+                                            <td class="hidden-xs">#{item.fkIdTorneo.nombreTorneo}</td>
+
+                                            <td class="hidden-xs">#{item.fkIdBarrio.nombreBarrio}, #{item.fkIdBarrio.fkIdLocalidad.nombreLocalidad}</td>
+
+
+                                        </tr>
+                                    </ui:repeat>
+
+
+                                </tbody>
+                            </table>
+
+                            <br></br>
+                            <h:commandLink title="Descargar tabla en pdf">
+                                <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
+                                <p:dataExporter type="pdf" target="tabCat" fileName="ListadoDeCategorias"/>
+                            </h:commandLink>
+                            <h:commandLink title="Descargar tabla en Excel">
+                                <img  src="../../resources/images/pdf/excel.png" alt="Descargar en Ecxel" style="width: 55px; height: 55px;"/>
+                                <p:dataExporter type="xls" target="tabCat" fileName="ListadoDeCategorias"/>
+                            </h:commandLink>
+
+                            <script language="JavaScript">
+                                function confirmar()
+                                {
+                                    if (!confirm("¿Deseas eliminar este registro?"))
+                                    {
+                                        return false;
+                                    } else
+                                    {
+
+                                        return true;
+                                    }
+                                }
+                            </script>
+
+                        </h:form>
+
+                        <br/>
+                        <div aria-hidden="true">
+                            <p:dialog class="form-control" widgetVar="formEdit"
+                                      modal="true"
+                                      position="top"
+                                      resizable="false"
+                                      draggable="true"
+                                      closable="true">
+
+
+                                <div class="modal-header">
+                                    <center><h1><h:outputText value="Edición de Encuentros"/></h1></center>
+
+                                    <h:form id="fEdit">
+
+
+                                        <h:outputLabel style="visibility:hidden;" value="IdEncuentro:"/>
+
+                                        <h:inputText id="idEncuentro" style="visibility:hidden" value="#{encuentroTorneoManagedBean.encuentroTorneo.idEncuentro}" title="IdBarrio" required="true" requiredMessage="Campo requerido"/>
+                                        <br/>
+                                        <h:outputLabel  value="Fecha del encuentro"/>
+                                        <br/>
+                                        <h:inputText jsf:data-language='es'  class="form-control datepicker-here" id="fecha" value="#{encuentroTorneoManagedBean.encuentroTorneo.fechaInicio}" title="FechaInicio" required="true" requiredMessage="Campo requerido">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:inputText>
+                                        <br/>
+
+                                        <h:outputLabel value="Equipo rival"/>
+
+                                        <h:inputText class="form-control" value="#{encuentroTorneoManagedBean.encuentroTorneo.descripcion}" title="Descripcion" required="true" requiredMessage="Campo requerido"/>
+
+                                        <h:outputLabel value="Resultado"/>
+
+                                        <h:inputText jsf:placeholder="0-0" onkeypress="return validarEd(event)"  class="form-control" value="#{encuentroTorneoManagedBean.encuentroTorneo.resultado}" title="Resultado" required="true" requiredMessage="Campo requerido"/>
+
+                                        <h:outputLabel value="Torneo"/>
+
+                                        <h:selectOneMenu class="form-control" id="fkIdTorneo" value="#{encuentroTorneoManagedBean.encuentroTorneo.fkIdTorneo}" title="FkIdTorneo" required="true" requiredMessage="The FkIdTorneo field is required.">
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItems value="#{torneoManagedBean.listar()}" var="listor" itemLabel="#{listor.nombreTorneo}"/>
+                                        </h:selectOneMenu>
+
+                                        <h:outputLabel value="Barrio"/>
+
+                                        <h:selectOneMenu class="form-control" id="fkIdBarrio" value="#{encuentroTorneoManagedBean.encuentroTorneo.fkIdBarrio}" title="FkIdBarrio" required="true" requiredMessage="The FkIdBarrio field is required.">
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItems value="#{barrioManagedBean.listar()}" var="lisbar" itemLabel="#{lisbar.nombreBarrio}"/>
+                                        </h:selectOneMenu>
+
+                                        <br/>
+
+                                        <center><h:commandButton  class="btn btn-outline btn-success" value="Guardar cambios" action="#{encuentroTorneoManagedBean.guardarCambiosEncuentroTorneo(encuentroTorneoManagedBean.encuentroTorneo)}" onclick="PF('formEdit').hide()"/></center>    
+                                        <script type="text/javascript">
+                                            function validarEd(e) { // 1
+                                                tecla = (document.all) ? e.keyCode : e.which; // 2
+                                                if (tecla == 8)
+                                                    return true; // 3
+                                                patron = /[1234567890-]/; // 4
+                                                te = String.fromCharCode(tecla); // 5
+                                                return patron.test(te); // 6
+                                            }
+                                        </script>
+                                        <script>
+
+                                            $("#fecha").datepicker({
+                                                dateFormat: 'mm/dd/yyyy'
+                                            });
+                                        </script>
+
+                                    </h:form>
+                                </div> 
+
+                            </p:dialog>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1"></div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

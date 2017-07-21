@@ -1,0 +1,265 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:t="http://xmlns.jcp.org/jsf/passthrough"
+       xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="content">
+
+
+               <div id="wrapper">
+
+     
+        <div id="page-wrapper">
+            <div class="row">
+               <br/>
+               <br/>
+               <br/>
+                <!-- /.col-lg-12 -->
+            </div>
+           
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-8">
+                    
+                    
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> <center>Lista de Jugadores Actuales</center>
+                            <div class="pull-right">
+                            
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                 <f:view>
+
+
+                                    <h:form>
+                                        
+                                        <h:dataTable class="table table-bordered table-hover table-striped" value="#{usuarioManagedBean.jugadores}" var="item">
+                                           
+                                             <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Codigo"/>
+                                                </f:facet>
+                                                 <h:outputText value="#{item.idUsuario}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Documento"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.documento}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Nombre"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.primerNombre} #{item.primerApellido}"/>
+                                            </h:column>
+                                           <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Correo"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.correo}"/>
+                                            </h:column>
+                                             <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Equipo"/>
+                                                </f:facet>
+                                                 <h:outputText value="#{item.jugador.fkIdEquipo.nombreEquipo}"/>
+                                            </h:column>
+                                             <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Posicion"/>
+                                                </f:facet>
+                                                 <h:outputText value="#{item.jugador.posicion}"/>
+                                            </h:column>
+                                         
+                                           
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Estado Usuario"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idEstado.nombreEstado}"/>
+                                            </h:column>
+                                           
+                                           
+                                        </h:dataTable>
+                                    </h:form>
+                                </f:view>
+                                
+                                      <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a  id="modal-41991" href="#modal-container-41991" role="button" class="btn btn-outline btn-suceess btn btn-default btn-block"  data-toggle="modal">Registrar Jugador</a>
+
+                                        <div class="modal fade" id="modal-container-41991" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                            ×
+                                                        </button>
+
+                                                    </div>
+                                                    <center>
+                                                        <h1><h:outputText value="Registro Jugador"/></h1>
+                                                    </center>
+
+                                                    <div class="modal-body">
+                                                        <center>
+                                                           <f:view>
+
+
+                                                        <h:form>
+                                                                <h:outputLabel value="Codigo Jugador:" for="idJugador" />
+                                                                <h:inputText t:type="number" class="form-control" id="idJugador" value="#{jugadorManagedBean.jugador.idJugador}" title="IdJugador" required="true" requiredMessage="The IdJugador field is required."/>
+                                                                <h:outputLabel value="Posicion:" for="posicion" />
+                                                                 <h:selectOneMenu class="form-control" id="posicion" value="#{jugadorManagedBean.jugador.posicion}" title="Posicion" required="true" requiredMessage="The Posicion field is required.">
+                                                            <f:selectItem itemValue="#{null}" itemLabel="Seleccione" />
+                                                            <f:selectItem  itemValue="Defensa" itemLabel="Defensa"/>
+                                                            <f:selectItem  itemValue="Volante" itemLabel="Volante"/>
+                                                            <f:selectItem itemValue="Delantero" itemLabel="Delantero"/>
+                                                            <f:selectItem itemValue="Arquero" itemLabel="Arquero"/>
+
+                                                        </h:selectOneMenu>
+                                                                
+                                                                <h:outputLabel value="Equipo:" for="fkIdEquipo" />
+                                                                <h:selectOneMenu class="form-control" id="fkIdEquipo" value="#{jugadorManagedBean.jugador.fkIdEquipo}" title="FkIdEquipo" required="true" requiredMessage="The FkIdEquipo field is required.">
+                                                                      <f:selectItem itemValue="#{null}" itemLabel="Seleccione" />
+                                                                    <!-- TODO: update below reference to list of available items-->
+                                                                    <f:selectItems value="#{equipoManagedBean.listarEquipos()}" var="equipo" itemLabel="Equipo: #{equipo.nombreEquipo} Categoria: #{equipo.fkIdCategoria.nombreCategoria}"/>
+                                                                </h:selectOneMenu>
+                                                                <h:commandButton value="Registrar Jugador" action="#{jugadorManagedBean.creaJugador()}"/>
+                                                            
+                                                        </h:form>
+                                                    </f:view>
+                                                        </center>
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                            Cerrar
+                                                        </button> 
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                             
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"><center>Equipos actuales</center></i> 
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <f:view>
+
+
+                                <h:form>
+                                   
+                                    <h:dataTable class="table table-bordered table-hover table-striped" value="#{equipoManagedBean.listarEquipos()}" var="item">
+                                       
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre Equipo"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.nombreEquipo}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Categoria"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.fkIdCategoria.nombreCategoria}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Entrenador"/>
+                                            </f:facet>
+                                            <h:outputText value="Documento: #{item.idEntrenador.usuario.documento} Nombres: #{item.idEntrenador.usuario.primerNombre} #{item.idEntrenador.usuario.primerApellido}"/>
+                                        </h:column>
+                                    </h:dataTable>
+                                </h:form>
+                            </f:view>
+                             
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class=" fa-fw"></i><center>
+                                Categorias Actuales
+                            </center> 
+                        </div>
+                        <div class="panel-body">
+                                             <f:view>
+
+
+                            <h:form>
+                                
+                                <h:dataTable class="table table-bordered table-hover table-striped" value="#{categoriaManagedBean.listCategorias()}" var="item">
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Numero de Categoria"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idCategoria}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre Categoria"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nombreCategoria}"/>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:form>
+                        </f:view>
+                           
+                        </div>
+    
+                    </div>
+                    <!-- /.panel -->
+                   
+                    <!-- /.panel .chat-panel -->
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
