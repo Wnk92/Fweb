@@ -242,7 +242,9 @@ and open the template in the editor.
                         <br/>
                         <h:outputLabel value="Clave:" for="clave" />
                         <br/>              
-                        <h:inputSecret  jsf:placeholder="Ejemplo de la clave: ************* 72" maxlength="50" id="clave" value="#{usuarioManagedBean.usuario.clave}" title="Clave" required="true" requiredMessage="The Clave field is required."/>
+                        <h:inputSecret  jsf:placeholder="Ejemplo de la clave: ************* 72" maxlength="50" id="clave" value="#{usuarioManagedBean.usuario.clave}" title="Clave" required="true" requiredMessage="The Clave field is required.">
+                          <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})" />
+                        </h:inputSecret>
                         <br/>
 
 
