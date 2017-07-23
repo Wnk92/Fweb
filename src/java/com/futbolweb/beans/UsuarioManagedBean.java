@@ -53,6 +53,7 @@ public class UsuarioManagedBean implements Serializable, InterfaceController<Usu
         listaInvitado = new LinkedList<>();
         acudienteJugador = aaa();
         jugador = new Jugador();
+        
     }
 
     @Override
@@ -221,7 +222,6 @@ public class UsuarioManagedBean implements Serializable, InterfaceController<Usu
     }
 
     public List<Usuario> kaj() {
-
         return getSesionM().getUsuarioSesion().getIdAcudiente().getUsuarioList();
     }
 

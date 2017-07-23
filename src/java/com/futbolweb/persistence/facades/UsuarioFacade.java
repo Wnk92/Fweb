@@ -62,8 +62,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
    public List<Usuario> listarJugAcudiente(Usuario u) {
         List<Usuario> lista;
         Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.idAcudiente = ?1");
-        query.setParameter(1, u);
-        System.out.println(u.getIdUsuario());
+        query.setParameter(1, u.getIdAcudiente());
+        System.out.println(u.getIdAcudiente());
         lista = query.getResultList();
         return lista;
     }
