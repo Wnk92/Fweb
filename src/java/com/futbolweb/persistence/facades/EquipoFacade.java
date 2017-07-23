@@ -54,19 +54,19 @@ public class EquipoFacade extends AbstractFacade<Equipo> {
     
     public List<Equipo> listarSuperior() {
 
-        return getEntityManager().createNamedQuery("Equipo.Categoria", Equipo.class).setParameter("fkIdCategoria", 6).getResultList();
+        return getEntityManager().createNamedQuery("Equipo.Categoria", Equipo.class).setParameter("fkIdCategoria", 4).getResultList();
 
     }
     
      public List<Equipo> listarPreJuvenil() {
 
-        return getEntityManager().createNamedQuery("Equipo.Categoria", Equipo.class).setParameter("fkIdCategoria", 1).getResultList();
+        return getEntityManager().createNamedQuery("Equipo.Categoria", Equipo.class).setParameter("fkIdCategoria", 5).getResultList();
 
     }
  
     public List<Equipo> listarInfantil() {
 
-        return getEntityManager().createNamedQuery("Equipo.Categoria", Equipo.class).setParameter("fkIdCategoria", 7).getResultList();
+        return getEntityManager().createNamedQuery("Equipo.Categoria", Equipo.class).setParameter("fkIdCategoria", 1).getResultList();
 
     }
  

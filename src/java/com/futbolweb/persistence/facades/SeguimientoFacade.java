@@ -39,6 +39,8 @@ public class SeguimientoFacade extends AbstractFacade<Seguimiento> {
         lista = query.getResultList();
         return lista;
     }
+    
+    
     public Seguimiento obtenerResultado(Seguimiento s){
       
         Query query = em.createNativeQuery("SELECT AVG(valoraciones.nota) AS \"promedio fisico\" FROM valoraciones INNER JOIN items ON items.id_items=valoraciones.id_item  INNER JOIN desempenio ON desempenio.id_desempenio=items.id_desempenio WHERE items.id_desempenio=?1  and valoraciones.id_seguimiento=?2;\n" +"",Seguimiento.class);

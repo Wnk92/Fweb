@@ -8,7 +8,10 @@ package com.futbolweb.beans;
 import com.futbolweb.converters.InterfaceController;
 import com.futbolweb.login.beans.SessionManagedBean;
 import com.futbolweb.persistence.entities.Jugador;
+import com.futbolweb.persistence.entities.Seguimiento;
+import com.futbolweb.persistence.entities.Usuario;
 import com.futbolweb.persistence.facades.JugadorFacade;
+import com.futbolweb.persistence.facades.SeguimientoFacade;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -31,6 +34,10 @@ public class JugadorManagedBean implements Serializable, InterfaceController<Jug
     private JugadorFacade jugadorEJB;
     @Inject
     private SessionManagedBean sessionMB;
+    private List<Seguimiento> lista;
+
+    @EJB
+    private SeguimientoFacade segf;
 
     public JugadorManagedBean() {
     }
@@ -61,8 +68,6 @@ public class JugadorManagedBean implements Serializable, InterfaceController<Jug
         this.sessionMB = sessionMB;
     }
 
-
-
     public List<Jugador> listarJugadores() {
         return jugadorEJB.findAll();
     }
@@ -73,6 +78,22 @@ public class JugadorManagedBean implements Serializable, InterfaceController<Jug
         } catch (Exception e) {
 
         }
+    }
+
+    public List<Seguimiento> listarSeguimientoo() {
+        return segf.listarSeguimientoEspecifico(jugador);
+    }
+
+    public List<Seguimiento> getListaJuagador() {
+        return (List<Seguimiento>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("seguimientos");
+    }
+
+    public String solicitarJugador2(Jugador j) {
+        jugador = j;
+        //lista = lseguimiento;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("seguimientos", lista);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("jseg", j);
+        return "/protegido/jugador/listajugadoresseguimiento.xhtml?faces-redirect=true";
     }
 
     public void redireccionarJugador() {

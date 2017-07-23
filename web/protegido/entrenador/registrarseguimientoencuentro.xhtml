@@ -20,16 +20,16 @@
 
 
                     <header>
-                        <h1 class="page-header text-center">Calificación del jugador</h1>
+                        <h1 class="page-header text-center">Seguimiento detallado de los partidos</h1>
                     </header>
                     <center>
-                        <p>Califique a los jugadores según su desempeño</p>        
+                        <p>Registre una breve descripción de los detalles de los partidos calificando a cada jugador participante</p>        
                         <br></br>
 
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a role="button" class="btn btn-outline btn-success"  action="#{seguimientoEncuentroManagedBean.redireccionarEncuentro(item)}" onclick="PF('formCreate').show();" update=":fCreate">Calificar jugador</a>
+                                    <a role="button" class="btn btn-outline btn-success"  action="#{seguimientoEncuentroManagedBean.redireccionarEncuentro(item)}" onclick="PF('formCreate').show();" update=":fCreate">Registrar</a>
                                     <div aria-hidden="true">
                                         <p:dialog class="form-control" widgetVar="formCreate"
                                                   modal="true"
@@ -43,15 +43,17 @@
 
                                                     <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
 
-                                                    <center><h2><h:outputText value="Calificación del jugador"/></h2></center>
+                                                    <center><h2><h:outputText value="Seguimiento de encuentros"/></h2></center>
 
                                                     <br/>
-                                                    <h:outputLabel value="Entrenador:" for="idEntrenador" />                                                   
-                                                    <h:selectOneMenu  class="form-control" id="idEntrenador" value="#{seguimientoEncuentroManagedBean.seguimientoencuentro.idEntrenador}" title="IdEntrenador" required="true" requiredMessage="The IdEntrenador field is required.">
+
+                                                    <h:outputLabel value="Torneo:" for="idEncuentro" />
+                                                    <h:selectOneMenu  class="form-control" id="idEncuentro" value="#{seguimientoEncuentroManagedBean.seguimientoencuentro.idEncuentro}" title="IdEncuentro" required="true" requiredMessage="The IdEncuentro field is required.">
                                                         <f:selectItem itemValue="#{null}" itemLabel="--seleccione--" />
                                                         <!-- TODO: update below reference to list of available items-->
-                                                        <f:selectItems value="#{entrenadorManagedBean.listarEntrenador()}" var="lisEnt" itemLabel="#{lisEnt.usuario.primerNombre} #{lisEnt.usuario.primerApellido}"/>
+                                                        <f:selectItems value="#{encuentroTorneoManagedBean.listar()}" var="lisEnc" itemLabel="#{lisEnc.descripcion}"/>
                                                     </h:selectOneMenu>
+
 
                                                     <h:outputLabel value="Jugador:" for="idJugador" />
                                                     <h:selectOneMenu  class="form-control" id="idJugador" value="#{seguimientoEncuentroManagedBean.seguimientoencuentro.idJugador}" title="IdJugador" required="true" requiredMessage="The IdJugador field is required.">
@@ -62,12 +64,7 @@
 
 
 
-                                                    <h:outputLabel value="Torneo:" for="idEncuentro" />
-                                                    <h:selectOneMenu  class="form-control" id="idEncuentro" value="#{seguimientoEncuentroManagedBean.seguimientoencuentro.idEncuentro}" title="IdEncuentro" required="true" requiredMessage="The IdEncuentro field is required.">
-                                                        <f:selectItem itemValue="#{null}" itemLabel="--seleccione--" />
-                                                        <!-- TODO: update below reference to list of available items-->
-                                                        <f:selectItems value="#{encuentroTorneoManagedBean.listar()}" var="lisEnc" itemLabel="#{lisEnc.descripcion}"/>
-                                                    </h:selectOneMenu>
+
 
 
 
@@ -105,7 +102,7 @@
 
                                                     <br/>
                                                     <br/>
-                                                    <h:commandButton actionListener="#{seguimientoEncuentroManagedBean.redireccionar()}" class="btn btn-outline btn-success" value="Registrar" action="#{seguimientoEncuentroManagedBean.registrarSeguimientoEncuentro()}" />
+                                                    <p:commandButton  class="btn btn-outline btn-success" value="Registrar" actionListener="#{seguimientoEncuentroManagedBean.registrarSeguimientoEncuentro()}" />
 
 
                                                 </h:form>
@@ -127,7 +124,7 @@
 
 
 
-                        <table id="table-transform"  value="#{seguimientoEncuentroManagedBean.listarSeguimientoEncuentro()}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
+                        <table id="table-transform"  value="#{seguimientoEncuentroManagedBean.listarSeguimientoEncuentroEntrenador()}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
                             <thead>
 
                                 <tr >
@@ -149,7 +146,7 @@
                             </thead>
                             <tbody>
 
-                                <ui:repeat  value="#{seguimientoEncuentroManagedBean.listarSeguimientoEncuentro()}" var="item">
+                                <ui:repeat  value="#{seguimientoEncuentroManagedBean.listarSeguimientoEncuentroEntrenador()}" var="item">
 
 
                                     <tr>

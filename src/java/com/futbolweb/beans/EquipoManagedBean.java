@@ -59,7 +59,7 @@ public class EquipoManagedBean implements Serializable, InterfaceController<Equi
         try {
 
             ef.create(equipo);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Torneo registrado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Equipo registrado con éxito"));
 
         } catch (Exception e) {
 
@@ -77,7 +77,7 @@ public class EquipoManagedBean implements Serializable, InterfaceController<Equi
 
         try {
             ef.edit(equipo);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se cambio Categoria"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se cambio equipo"));
         } catch (Exception e) {
         }
 

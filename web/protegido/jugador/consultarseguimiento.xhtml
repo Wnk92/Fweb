@@ -12,71 +12,111 @@
 
             <ui:define name="content">
 
-                <div class="rowContainer">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-10">
-                        <br></br>
+                <script type="text/javascript" src="../../resources/js/Chart.bundle.js"></script>
+                <script type="text/javascript" src="../../resources/js/Chart.bundle.min.js"></script>
+                <script type="text/javascript" src="../../resources/js/Chart.js"></script>
+                <script type="text/javascript" src="../../resources/js/Chart.min.js"></script>
 
-                        <header>
-                            <h1 class="page-header text-center">Seguimiento de #{sessionManagedBean.usuarioSesion.primerNombre} #{sessionManagedBean.usuarioSesion.primerApellido}</h1>
-                        </header>
-                        <center>
-                            <p>Revisa tus seguimientos</p>        
+                <div class="rowContainer">
+
+
+                    <div class="row">
+
+
+                        <div class="col-lg-6">
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <div class="col-lg-1"></div>
+
+                        <div class="col-lg-10">
                             <br></br>
 
-                        </center>
+                            <header>
+                                <h1 class="page-header text-center">Valoracion de Desempeño</h1>
+                            </header>
 
-                        <h:form id="dqw">
+                            <h:form id="formValoracion">
+                                <h:panelGroup id="tabla" layout="block">
 
+                                    <center>
+                                        <li><a  href="../jugador/listajugadoresseguimiento.xhtml" class="icoLinkedin"><i class="fa fa-linked"> <img style="width: 200px; height: 200px;" src="../../resources/images/usuario/mm.png" title="Regresar a todos los seguimientos del jugador" alt="Imagen iconica del sistema"/></i></a></li>
+                                        <p>Seguimiento mas detallado del jugador</p>
+                                    </center>
+                                    <br/>
+                                    <center>
 
-                            <table id="table-transform"  value="#{seguimientoManagedBean.listarSeguimientoPropio()}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
-                                <thead>
+                                        <a id="modal-41990" href="#modal-container-41990" role="button" class="btn btn-outline btn-success"  data-toggle="modal">Seguimiento Físico</a>
 
-                                    <tr >
+                                        <a id="modal-41991" href="#modal-container-41991" role="button" class="btn btn-outline btn-success"  data-toggle="modal">Seguimiento Táctico</a>
 
-                                        <th class="hidden-xs">Fecha</th>
+                                        <a id="modal-41992" href="#modal-container-41992" role="button" class="btn btn-outline btn-success"  data-toggle="modal">Seguimiento Psicológico</a>
 
-                                        <th class="hidden-xs">Calificación</th>
+                                        <a id="modal-41993" href="#modal-container-41993" role="button" class="btn btn-outline btn-success"  data-toggle="modal">Seguimiento Técnico</a>
 
-                                        <th class="hidden-xs">Observación</th>
+                                    </center> 
+                                    <br/>
+                                    <table id="table-transform"  value="#{valoracionManagedBean.listarValoracion2()}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
+                                        <thead>
 
-                                        <th class="hidden-xs">Entrenador</th>
+                                            <tr>
 
-                                        <th class="hidden-xs">Posición</th> 
+                                                <th class="hidden-xs">Seguimiento</th>
 
+                                                <th class="hidden-xs">Item</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <ui:repeat  value="#{seguimientoManagedBean.listarSeguimientoPropio()}" var="item">
-
-                                        <tr>
-
-                                          <td class="hidden-xs">
-                                              <h:outputText value="#{item.fechaSeguimiento}">
-                                                    <f:convertDateTime pattern="dd-MM-yyyy">
-
-                                                    </f:convertDateTime>
-                                                </h:outputText></td>
-
-
-                                        <td>#{item.resultadoSeguimiento}</td>
-
-                                        <td>#{item.observacion}</td>
-
-                                        <td >Doc:#{item.idEntrenador.usuario.documento}, #{item.idEntrenador.usuario.primerNombre} #{item.idEntrenador.usuario.primerApellido}</td>
+                                                <th class="hidden-xs">Nota</th>
 
 
-                                        <td>#{item.idPosicionSeguimiento.posicion}</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <ui:repeat  value="#{valoracionManagedBean.listarValoracion2()}" var="item">
+                                                <h:form>   <tr>
+
+                                                        <td class="hidden-xs" align="center">
+
+                                                            <h:outputText value="#{item.idItem.idDesempenio.nombreDesempenio}"/>
+
+                                                        </td>
 
 
-                                        </tr>
-                                    </ui:repeat>
+
+                                                        <td  class="hidden-xs" align="center">
+
+                                                            <h:outputText value="#{item.idItem.descripcion}"/>
+
+                                                        </td>
 
 
-                                </tbody>
-                            </table>
+                                                        <td class="hidden-xs" align="center" >
+
+                                                            <progress id="myProgress" value="#{item.nota}" max="5">
+                                                            </progress>
+                                                            <script>
+                                                                function myFunction() {
+                                                                    document.getElementById("myProgress").value = "#{item.nota}";
+                                                                }
+                                                            </script>
+                                                            <p>Puntaje: #{item.nota}</p>
+                                                        </td>
+
+
+                                                    </tr>
+                                                </h:form>
+                                            </ui:repeat>
+
+                                        </tbody>
+                                    </table>
+                                </h:panelGroup>
+                            </h:form>
                             <br></br>
                             <h:commandLink title="Descargar tabla en pdf">
                                 <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
@@ -87,30 +127,316 @@
                                 <p:dataExporter type="xls" target="tabCat" fileName="ListadoDeCategorias"/>
                             </h:commandLink>
 
+                        </div>
 
-                            <script language="JavaScript">
-                                function confirmar()
-                                {
-                                    if (!confirm("¿Deseas eliminar este registro?"))
-                                    {
-                                        return false;
-                                    } else
-                                    {
-
-                                        return true;
-                                    }
-                                }
-                            </script>
+                        <div class="col-lg-1"></div>
 
 
-                        </h:form>
+                    </div>
 
+
+
+                    <div class="row">
+                        <div class="col-lg-12">
+
+
+                            <br/>
+
+
+
+                            <br/>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-lg-6">
+
+                            <div id="desempenioTactico"></div>
+
+
+                            <div id="desempenioFisico"></div>
+
+                        </div>
 
                         <br/>
 
+                        <div class="col-lg-6">
+
+                            <div id="desempenioPsicologico"></div>
+
+
+                            <div id="desempenioTecnico"></div>
+
+                        </div>                          
+
+
                     </div>
-                    <div class="col-lg-1"></div>
                 </div>
+
+
+                <div class="modal fade" id="modal-container-41990" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    ×
+                                </button>
+
+                            </div>
+                            <div class="modal-body">
+
+
+                                <div class="row">
+                                    <div  class="col-lg-12">
+
+                                        <canvas id="fisico" width="500" height="500"></canvas>
+                                        <script>
+                                            var ctx = document.getElementById("fisico").getContext('2d');
+                                            var myChart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: ["Velocidad", "Fuerza", "Resistencia", "Flexibilidad"],
+                                                    datasets: [{
+                                                            label: 'Desempeño Físico',
+                                                            data: [#{desempenioFisicoManagedBean.velocidad}, #{desempenioFisicoManagedBean.fuerza}, #{desempenioFisicoManagedBean.resistencia}, #{desempenioFisicoManagedBean.flexibilidad}],
+                                                            backgroundColor: [
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)'
+
+                                                            ],
+                                                            borderColor: [
+                                                                'rgba(255,99,132,1)',
+                                                                'rgba(54, 162, 235, 1)',
+                                                                'rgba(255, 206, 86, 1)',
+                                                                'rgba(75, 192, 192, 1)'
+
+                                                            ],
+                                                            borderWidth: 1
+                                                        }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                        yAxes: [{
+                                                                ticks: {
+                                                                    beginAtZero: true
+                                                                }
+                                                            }]
+                                                    }
+                                                }
+                                            });
+                                        </script>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal fade" id="modal-container-41991" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    ×
+                                </button>
+
+                            </div>
+                            <div class="modal-body">
+
+
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        <canvas id="tactico" width="500" height="500"></canvas>
+                                        <script>
+                                            var ctx = document.getElementById("tactico").getContext('2d');
+                                            var myChart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: ["Sucesión de pases", "Acompañamiento al equipo", "Avance y retroceso en conjunto", "Voz de mando en su posición"],
+                                                    datasets: [{
+                                                            label: 'Desempeño Táctico',
+                                                            data: [#{desempenioTacticoManagedBean.sucesion}, #{desempenioTacticoManagedBean.acompaniamiento}, #{desempenioTacticoManagedBean.avance}, #{desempenioTacticoManagedBean.mando}],
+                                                            backgroundColor: [
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)'
+
+                                                            ],
+                                                            borderColor: [
+                                                                'rgba(255,99,132,1)',
+                                                                'rgba(54, 162, 235, 1)',
+                                                                'rgba(255, 206, 86, 1)',
+                                                                'rgba(75, 192, 192, 1)'
+
+                                                            ],
+                                                            borderWidth: 1
+                                                        }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                        yAxes: [{
+                                                                ticks: {
+                                                                    beginAtZero: true
+                                                                }
+                                                            }]
+                                                    }
+                                                }
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal fade" id="modal-container-41992" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    ×
+                                </button>
+
+                            </div>
+                            <div class="modal-body">
+
+
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        <canvas id="Psicologico" width="500" height="500"></canvas>
+                                        <script>
+                                            var ctx = document.getElementById("Psicologico").getContext('2d');
+                                            var myChart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: ["Compañerismo", "Acoplamiento al juego", "Rendimiento bajo presión", "Conducta"],
+                                                    datasets: [{
+                                                            label: 'Desempeño Psicológico',
+                                                            data: [#{desempenioPsicologicoManagedBean.compañerismo}, #{desempenioPsicologicoManagedBean.acomplamiento}, #{desempenioPsicologicoManagedBean.rendimiento}, #{desempenioPsicologicoManagedBean.conducta}],
+                                                            backgroundColor: [
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)'
+
+                                                            ],
+                                                            borderColor: [
+                                                                'rgba(255,99,132,1)',
+                                                                'rgba(54, 162, 235, 1)',
+                                                                'rgba(255, 206, 86, 1)',
+                                                                'rgba(75, 192, 192, 1)'
+
+                                                            ],
+                                                            borderWidth: 1
+                                                        }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                        yAxes: [{
+                                                                ticks: {
+                                                                    beginAtZero: true
+                                                                }
+                                                            }]
+                                                    }
+                                                }
+                                            });
+                                        </script>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal fade" id="modal-container-41993" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    ×
+                                </button>
+
+                            </div>
+                            <div class="modal-body">
+
+
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        <canvas id="tecnico" width="500" height="500"></canvas>
+                                        <script>
+                                            var ctx = document.getElementById("tecnico").getContext('2d');
+                                            var myChart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: ["Control del balón", "Cambio de frente", "Enganche", "Centros"],
+                                                    datasets: [{
+                                                            label: 'Desempeño Técnico',
+                                                            data: [#{desempenioTecnicoManagedBean.control}, #{desempenioTecnicoManagedBean.cambio}, #{desempenioTecnicoManagedBean.enganche}, #{desempenioTecnicoManagedBean.centros}],
+                                                            backgroundColor: [
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)'
+
+                                                            ],
+                                                            borderColor: [
+                                                                'rgba(255,99,132,1)',
+                                                                'rgba(54, 162, 235, 1)',
+                                                                'rgba(255, 206, 86, 1)',
+                                                                'rgba(75, 192, 192, 1)'
+
+                                                            ],
+                                                            borderWidth: 1
+                                                        }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                        yAxes: [{
+                                                                ticks: {
+                                                                    beginAtZero: true
+                                                                }
+                                                            }]
+                                                    }
+                                                }
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </ui:define>
 
 

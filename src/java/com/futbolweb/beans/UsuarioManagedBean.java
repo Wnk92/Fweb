@@ -7,6 +7,7 @@ package com.futbolweb.beans;
 
 import com.futbolweb.converters.InterfaceController;
 import com.futbolweb.login.beans.SessionManagedBean;
+import com.futbolweb.persistence.entities.Jugador;
 import com.futbolweb.persistence.entities.Usuario;
 import com.futbolweb.persistence.facades.UsuarioFacade;
 import com.futboweb.correocontacto.email.Email;
@@ -38,8 +39,10 @@ public class UsuarioManagedBean implements Serializable, InterfaceController<Usu
     private EstadoUsuarioManagedBean estadoUsuarioManagedBean;
     @Inject
     private RolManagedBean rolManagedBean;
-     @Inject
+    @Inject
     private SessionManagedBean sesionM;
+    private List<Usuario> acudienteJugador;
+    private Jugador jugador;
 
     public UsuarioManagedBean() {
     }
@@ -48,6 +51,8 @@ public class UsuarioManagedBean implements Serializable, InterfaceController<Usu
     public void init() {
         usuario = new Usuario();
         listaInvitado = new LinkedList<>();
+        acudienteJugador = aaa();
+        jugador = new Jugador();
     }
 
     @Override
@@ -104,9 +109,6 @@ public class UsuarioManagedBean implements Serializable, InterfaceController<Usu
     public void setSesionM(SessionManagedBean sesionM) {
         this.sesionM = sesionM;
     }
-    
-    
-    
 
     public void recorroUsuarioInvitado() {
         for (Usuario a : listaInvitado) {
@@ -121,132 +123,130 @@ public class UsuarioManagedBean implements Serializable, InterfaceController<Usu
             usuario.setIdTipoRol(getRolManagedBean().getObjectByKey(5));
             uf.create(usuario);
             if (usuario != null) {
-                
-            Email envioU;
-            envioU = new Email("Registro de usuario exitoso", "Apreciado usuario "+usuario.getPrimerNombre()+" "+usuario.getPrimerApellido()+", Se ha realizado con exito su registro en el sistema Futbol Web."
-                    + ""+" Gracias por registrarse en nuestro sistema, se le informa que su rol actual es: '"+usuario.getIdTipoRol().getNombreRol()+"' y su estado actual es:'"+usuario.getIdEstado().getNombreEstado()+"' hasta que el coordinador verifique y actualice sus datos."
-                    + ""+" Accederá con su documento:'"+usuario.getDocumento()+"'"
-                    + " y su contraseña:'"+usuario.getClave()+"",usuario.getCorreo());
-            System.out.println(envioU.toString());
-            envioU.enviarEmail2();
+
+                Email envioU;
+                envioU = new Email("Registro de usuario exitoso", "Apreciado usuario " + usuario.getPrimerNombre() + " " + usuario.getPrimerApellido() + ", Se ha realizado con exito su registro en el sistema Futbol Web."
+                        + "" + " Gracias por registrarse en nuestro sistema, se le informa que su rol actual es: '" + usuario.getIdTipoRol().getNombreRol() + "' y su estado actual es:'" + usuario.getIdEstado().getNombreEstado() + "' hasta que el coordinador verifique y actualice sus datos."
+                        + "" + " Accederá con su documento:'" + usuario.getDocumento() + "'"
+                        + " y su contraseña:'" + usuario.getClave() + "", usuario.getCorreo());
+                System.out.println(envioU.toString());
+                envioU.enviarEmail2();
             }
         } catch (Exception e) {
         }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario registrado con éxito"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario registrado con éxito"));
 
     }
-    
-       public void redireccionarUsuariosatisfatorio() {
+
+    public void redireccionarUsuariosatisfatorio() {
 
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("registro_satisfactorio.xhtml");
         } catch (Exception e) {
         }
     }
-    
-    
-    public void verInvitado(Usuario u){
-    
-    this.usuario=u;
+
+    public void verInvitado(Usuario u) {
+
+        this.usuario = u;
     }
-    
-      public void editarUsuarioSession(){
+
+    public void editarUsuarioSession() {
         try {
             usuario.getIdUsuario();
             uf.edit(usuario);
         } catch (Exception e) {
         }
     }
-    
-    
-    
-    public void editarInvitados(){
+
+    public void editarInvitados() {
         try {
             usuario.getIdUsuario();
             uf.edit(usuario);
         } catch (Exception e) {
         }
     }
-    
-        public void eliminarUsuarioInvitadi(Usuario u) {
+
+    public void eliminarUsuarioInvitadi(Usuario u) {
         uf.remove(u);
-    
+
     }
-    
-        
-          public void redireccionarUsuarioJugadorAcudiente() {
+
+    public void redireccionarUsuarioJugadorAcudiente() {
 
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("registro_jugador.xhtml");
         } catch (Exception e) {
         }
     }
-    
-      public void redireccionarUsuarioCordinador() {
+
+    public void redireccionarUsuarioCordinador() {
 
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("lista_usuarios.xhtml");
         } catch (Exception e) {
         }
     }
-      
-      
-    
-    
-    
-    
-      public void redireccionarUsuarioInvitado() {
+
+    public void redireccionarUsuarioInvitado() {
 
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("lista_invitados.xhtml");
         } catch (Exception e) {
         }
     }
-      
-      
-          public void redireccionarUsuarioJugador() {
+
+    public void redireccionarUsuarioJugador() {
 
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("lista_jugadores.xhtml");
         } catch (Exception e) {
         }
     }
-    
-          
-             
-          public void redireccionarUsuarioEntrenador() {
+
+    public void redireccionarUsuarioEntrenador() {
 
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("lista_entrenadores.xhtml");
         } catch (Exception e) {
         }
     }
-          
-          
-                   
-          public void redireccionarUsuarioAcudiente() {
+
+    public void redireccionarUsuarioAcudiente() {
 
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("lista_acudientes.xhtml");
         } catch (Exception e) {
         }
     }
-    
-    
+
+    public List<Usuario> kaj() {
+
+        return getSesionM().getUsuarioSesion().getIdAcudiente().getUsuarioList();
+    }
+
+    public List<Usuario> bbb() {
+
+        return uf.listarJugAcudiente(usuario);
+    }
+
+    public List<Usuario> aaa() {
+        return (List<Usuario>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarios");
+    }
 
     public void creaUsuario() {
         try {
 
             uf.create(usuario);
             if (usuario != null) {
-                
-            Email envioU;
-            envioU = new Email("Registro de usuario exitoso", "Apreciado usuario "+usuario.getPrimerNombre()+" "+usuario.getPrimerApellido()+", Se ha realizado con exito su registro en el sistema Futbol Web."
-                    + ""+" Gracias por registrarse en nuestro sistema, se le informa que su rol actual es: '"+usuario.getIdTipoRol().getNombreRol()+"' y su estado actual es:'"+usuario.getIdEstado().getNombreEstado()+"'."
-                    + ""+" Accederá con su documento:'"+usuario.getDocumento()+"'"
-                    + " y su contraseña:'"+usuario.getClave()+"",usuario.getCorreo());
-            System.out.println(envioU.toString());
-            envioU.enviarEmail2();
+
+                Email envioU;
+                envioU = new Email("Registro de usuario exitoso", "Apreciado usuario " + usuario.getPrimerNombre() + " " + usuario.getPrimerApellido() + ", Se ha realizado con exito su registro en el sistema Futbol Web."
+                        + "" + " Gracias por registrarse en nuestro sistema, se le informa que su rol actual es: '" + usuario.getIdTipoRol().getNombreRol() + "' y su estado actual es:'" + usuario.getIdEstado().getNombreEstado() + "'."
+                        + "" + " Accederá con su documento:'" + usuario.getDocumento() + "'"
+                        + " y su contraseña:'" + usuario.getClave() + "", usuario.getCorreo());
+                System.out.println(envioU.toString());
+                envioU.enviarEmail2();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario registrado con éxito"));
 
@@ -265,11 +265,12 @@ public class UsuarioManagedBean implements Serializable, InterfaceController<Usu
     public List<Usuario> getActivos() {
         return this.uf.listaActivos();
     }
-    
-     public List<Usuario> getJugadores() {
+
+    public List<Usuario> getJugadores() {
         return this.uf.listaJugadores();
     }
-       public List<Usuario> getEntrenador() {
+
+    public List<Usuario> getEntrenador() {
         return this.uf.listaEntrenadores();
     }
 //        public List<Usuario> getJugadoresAcudiente(){
@@ -297,25 +298,23 @@ public class UsuarioManagedBean implements Serializable, InterfaceController<Usu
         } catch (Exception e) {
         }
     }
-    
-    public void envioAdvertencia(Usuario u){
-        
-              Email envioA;
-    envioA = new Email("Advertencia de pago", "Señor/a "+u.getPrimerNombre()+" "+u.getPrimerApellido()+", Se advierte que posee un pago en mora  en el club Expreso Rojo, si no realiza el pago oportuno, se procederá a realizar el bloqueo  del acceso a nuestro sistema, para mas información consultar el control de pagos en nuestro sistema.",u.getCorreo());
-            System.out.println(envioA.toString());
-    envioA.enviarEmail2();  
-            
-   
+
+    public void envioAdvertencia(Usuario u) {
+
+        Email envioA;
+        envioA = new Email("Advertencia de pago", "Señor/a " + u.getPrimerNombre() + " " + u.getPrimerApellido() + ", Se advierte que posee un pago en mora  en el club Expreso Rojo, si no realiza el pago oportuno, se procederá a realizar el bloqueo  del acceso a nuestro sistema, para mas información consultar el control de pagos en nuestro sistema.", u.getCorreo());
+        System.out.println(envioA.toString());
+        envioA.enviarEmail2();
+
     }
-    public void envioBloqueo(Usuario u){
-        
-              Email envioA;
-    envioA = new Email("Advertencia de bloqueo de acceso", "Señor/a "+u.getPrimerNombre()+" "+u.getPrimerApellido()+", Se le notifica que se le ha bloquado el acceso al club Expreso Rojo por moras en los pagos, se le rehabilitará el acceso cuando realice los pagos pendientes.",u.getCorreo());
-            System.out.println(envioA.toString());
-    envioA.enviarEmail2();  
-            
-   
+
+    public void envioBloqueo(Usuario u) {
+
+        Email envioA;
+        envioA = new Email("Advertencia de bloqueo de acceso", "Señor/a " + u.getPrimerNombre() + " " + u.getPrimerApellido() + ", Se le notifica que se le ha bloquado el acceso al club Expreso Rojo por moras en los pagos, se le rehabilitará el acceso cuando realice los pagos pendientes.", u.getCorreo());
+        System.out.println(envioA.toString());
+        envioA.enviarEmail2();
+
     }
-   
 
 }

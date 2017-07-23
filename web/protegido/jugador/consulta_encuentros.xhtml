@@ -33,17 +33,16 @@
 
                                     <tr >
 
-                                        <th class="hidden-xs">Nombre</th>
-
-                                        <th class="hidden-xs">Observación</th>
-
-                                        <th class="hidden-xs">Calificación</th>
-
+                                        <th class="hidden-xs">Entrenador</th> 
+                                        
                                         <th class="hidden-xs">Torneo</th>
 
-                                        <th class="hidden-xs">Entrenador</th> 
+                                        <th class="hidden-xs">Rival</th>
 
                                         <th class="hidden-xs">Goles</th>
+
+                                        <th class="hidden-xs">Calificación</th>
+                                     
 
 
                                     </tr>
@@ -54,18 +53,19 @@
 
                                         <tr>
 
-                                            <td class="hidden-xs" >#{item.idJugador.usuario.primerNombre} #{item.idJugador.usuario.primerApellido}</td>
+                                         
 
-                                            <td class="hidden-xs">#{item.observacion}</td>
 
-                                            <td class="hidden-xs">#{item.calificacion}</td>
-
-                                            <td class="hidden-xs">#{item.idEncuentro.fkIdTorneo.nombreTorneo}</td>
 
                                             <td class="hidden-xs" >#{item.idEntrenador.usuario.primerNombre} #{item.idEntrenador.usuario.primerApellido}</td>
 
+                                            <td class="hidden-xs">#{item.idEncuentro.fkIdTorneo.nombreTorneo}</td>
+
+                                            <td class="hidden-xs">#{item.observacion}</td>
+
                                             <td class="hidden-xs">#{item.goles}</td>
 
+                                            <td class="hidden-xs">#{item.calificacion}</td>
 
                                         </tr>
                                     </ui:repeat>

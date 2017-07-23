@@ -170,5 +170,11 @@ public class EncuentroTorneoFacade extends AbstractFacade<EncuentroTorneo> {
         return getEntityManager().createNamedQuery("EncuentroTorneo.Localidad", EncuentroTorneo.class).setParameter("fkIdLocalidad", 19).getResultList();
     
     }
+    
+    public List<EncuentroTorneo> listarSumapaz() {
+        
+        return getEntityManager().createNamedQuery("EncuentroTorneo.Localidad", EncuentroTorneo.class).setParameter("fkIdLocalidad", 20).getResultList();
+    
+    }
 
 }

@@ -11,6 +11,10 @@
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
 
             <ui:define name="content">
+                <script type="text/javascript" src="../../resources/js/Chart.bundle.js"></script>
+                <script type="text/javascript" src="../../resources/js/Chart.bundle.min.js"></script>
+                <script type="text/javascript" src="../../resources/js/Chart.js"></script>
+                <script type="text/javascript" src="../../resources/js/Chart.min.js"></script>
 
                 <div class="rowContainer">
                     <div class="col-lg-1"></div>
@@ -26,7 +30,7 @@
                                 <thead>
 
                                     <tr >
-                                       
+
                                         <th class="hidden-xs">Fecha</th>
 
                                         <th class="hidden-xs">Resultado</th>
@@ -47,12 +51,12 @@
 
                                         <tr>
 
-                                             <td class="hidden-xs">
-                                            <h:outputText value="#{item.fechaInicio}">
-                                                <f:convertDateTime pattern="dd-MM-yyyy">
+                                            <td class="hidden-xs">
+                                                <h:outputText value="#{item.fechaInicio}">
+                                                    <f:convertDateTime pattern="dd-MM-yyyy">
 
-                                                </f:convertDateTime>
-                                            </h:outputText></td>
+                                                    </f:convertDateTime>
+                                                </h:outputText></td>
 
                                             <td>#{item.resultado}</td>
 
@@ -83,34 +87,115 @@
                         </h:form>
 
 
-                        <center> <h:outputText style="font-size: 20px;" value="Localidades con más torneos"/></center>
+                        <center>
+                            <a id="modal-41992" style="font-size: 20px;" href="#modal-container-41992" role="button" class="btn btn-outline btn-success"  data-toggle="modal">Localidades con más torneos</a>
 
-                        <canvas id="bar-chart" width="3500" height="900"></canvas>
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-                        <script>
-                            new Chart(document.getElementById("bar-chart"), {
-                                type: 'pie',
-                                data: {
-                                    labels: ["Suba", "Engativá", "Fontibón", "Kennedy", "Bosa"],
-                                    datasets: [
-                                        {
-                                            label: "Population (millions)",
-                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                                            data: [#{encuentroTorneoManagedBean.listarSuba().size()}, #{encuentroTorneoManagedBean.listarEngativa().size()}, #{encuentroTorneoManagedBean.listarFontibon().size()}, #{encuentroTorneoManagedBean.listarKened().size()}, #{encuentroTorneoManagedBean.listarBosa().size()}]
-                                        }
-                                    ]
-                                },
-                                options: {
-                                    legend: {display: false},
-                                    title: {
-                                    }
-                                }
-                            });
-                        </script>
+                        </center>
+
+
+
+
                     </div>
 
                 </div>
                 <div class="col-lg-1"></div>
+
+
+
+                <div class="modal fade" id="modal-container-41992" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    ×
+                                </button>
+
+                            </div>
+                            <div class="modal-body">
+
+
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+
+                                        <canvas id="Psicologico" width="500" height="500"></canvas>
+                                        <script>
+                                            var ctx = document.getElementById("Psicologico").getContext('2d');
+                                            var myChart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: ["Usaquén", "Chapinero", "Santa Fé", "San Cristobal", "Usme", "Tunjuelito", "Bosa", "Ciudad Kennedy", "Fontibón", "Engativá", "Suba", "Barrios Unidos", "Teusaquillo", "Los MArtires", "Antonio Nariño", "Puente Aranda", "Candelaria", "Rafael Uribe", "Ciudad Bolivar", "Sumapaz"],
+                                                    datasets: [{
+                                                            label: 'Localidades con más Torneos',
+                                                            data: [#{encuentroTorneoManagedBean.listarUsaquen().size()}, #{encuentroTorneoManagedBean.listarChapi().size()}, #{encuentroTorneoManagedBean.listarSanta().size()}, #{encuentroTorneoManagedBean.listarSanCris().size()}, #{encuentroTorneoManagedBean.listarUsme().size()}, #{encuentroTorneoManagedBean.listarTunjuelo().size()}, #{encuentroTorneoManagedBean.listarBosa().size()}, #{encuentroTorneoManagedBean.listarKened().size()}, #{encuentroTorneoManagedBean.listarFontibon().size()}, #{encuentroTorneoManagedBean.listarEngativa().size()}, #{encuentroTorneoManagedBean.listarSuba().size()}, #{encuentroTorneoManagedBean.listarBarriosU().size()}, #{encuentroTorneoManagedBean.listarTeusaq().size()}, #{encuentroTorneoManagedBean.listarLosMartires().size()}, #{encuentroTorneoManagedBean.listarAntonio().size()}, #{encuentroTorneoManagedBean.listarPuenteAr().size()}, #{encuentroTorneoManagedBean.listarCandelaria().size()}],
+                                                            backgroundColor: [
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)'
+
+                                                            ],
+                                                            borderColor: [
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)',
+                                                                'rgba(255, 99, 132, 0.2)',
+                                                                'rgba(54, 162, 235, 0.2)',
+                                                                'rgba(255, 206, 86, 0.2)',
+                                                                'rgba(75, 192, 192, 0.2)'
+                                                            ],
+                                                            borderWidth: 1
+                                                        }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                        yAxes: [{
+                                                                ticks: {
+                                                                    beginAtZero: true
+                                                                }
+                                                            }]
+                                                    }
+                                                }
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </ui:define>
 
         </ui:composition>

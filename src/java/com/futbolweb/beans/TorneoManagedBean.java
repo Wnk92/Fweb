@@ -1,6 +1,7 @@
 package com.futbolweb.beans;
 
 import com.futbolweb.converters.InterfaceController;
+import com.futbolweb.login.beans.SessionManagedBean;
 import com.futbolweb.persistence.entities.Torneo;
 import com.futbolweb.persistence.facades.TorneoFacade;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -24,6 +26,8 @@ public class TorneoManagedBean implements Serializable, InterfaceController<Torn
     private Torneo torneo;
     @EJB
     private TorneoFacade tf;
+    @Inject
+    private SessionManagedBean sessionMB;
 
     public TorneoManagedBean() {
     }
@@ -38,6 +42,14 @@ public class TorneoManagedBean implements Serializable, InterfaceController<Torn
         return tf.find(key);
     }
 
+    public SessionManagedBean getSessionMB() {
+        return sessionMB;
+    }
+
+    public void setSessionMB(SessionManagedBean sessionMB) {
+        this.sessionMB = sessionMB;
+    }
+
     public Torneo getTorneo() {
         return torneo;
     }
@@ -49,10 +61,6 @@ public class TorneoManagedBean implements Serializable, InterfaceController<Torn
     public List<Torneo> listar() {
         return tf.findAll();
     }
-    
-    
-    
-
 
     public void create() {
         try {
@@ -102,6 +110,12 @@ public class TorneoManagedBean implements Serializable, InterfaceController<Torn
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Se modificó el registro"));
         } catch (Exception e) {
         }
+
+    }
+
+    public List<Torneo> listarTorneoPropio() {
+
+        return getSessionMB().getUsuarioSesion().getJugador().getFkIdEquipo().getTorneoList();
 
     }
 

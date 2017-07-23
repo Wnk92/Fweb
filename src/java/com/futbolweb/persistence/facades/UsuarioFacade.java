@@ -5,6 +5,7 @@
  */
 package com.futbolweb.persistence.facades;
 
+import com.futbolweb.persistence.entities.Jugador;
 import com.futbolweb.persistence.entities.Rol;
 import com.futbolweb.persistence.entities.Usuario;
 import java.util.List;
@@ -58,7 +59,15 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         return getEntityManager().createNamedQuery("Usuario.rolInvitado", Usuario.class).setParameter("idTipoRol", 2).getResultList();
     }
 
-
+   public List<Usuario> listarJugAcudiente(Usuario u) {
+        List<Usuario> lista;
+        Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.idAcudiente = ?1");
+        query.setParameter(1, u);
+        System.out.println(u.getIdUsuario());
+        lista = query.getResultList();
+        return lista;
+    }
+    
     public Usuario iniciarSesion(Usuario user) {
         Usuario usuario = null;
         String rta;

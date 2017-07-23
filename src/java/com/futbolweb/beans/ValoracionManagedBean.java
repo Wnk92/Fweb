@@ -105,9 +105,15 @@ public class ValoracionManagedBean implements Serializable, InterfaceController<
         return valf.listarSeguimientoEspecifico(seguimiento);
     }
 
+    
     public String solicitarSeguimiento(Seguimiento s) {
         seguimiento = s;
         return "/protegido/entrenador/valoraciondesempenio.xhtml?faces-redirect=true";
+    }
+    
+    public String solicitarSeguimientoJug(Seguimiento s) {
+        seguimiento = s;
+        return "/protegido/jugador/consultarseguimiento.xhtml?faces-redirect=true";
     }
 
     public String solicitarSeguimiValor(Seguimiento s) {

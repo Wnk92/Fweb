@@ -57,7 +57,7 @@ public class EncuentroTorneoManagedBean implements Serializable, InterfaceContro
     public void crear() {
 
         try {
-            FacesContext context = FacesContext.getCurrentInstance();   
+            FacesContext context = FacesContext.getCurrentInstance();
             encuentroejb.create(encuentroTorneo);
             context.addMessage(null, new FacesMessage("Successful", "Your message: " + message));
 
@@ -95,6 +95,48 @@ public class EncuentroTorneoManagedBean implements Serializable, InterfaceContro
 
     }
 
+    public List<EncuentroTorneo> listarUsaquen() {
+
+        return encuentroejb.listarUsaquen();
+
+    }
+
+    public List<EncuentroTorneo> listarChapi() {
+
+        return encuentroejb.listarChapinero();
+
+    }
+
+    public List<EncuentroTorneo> listarSanta() {
+
+        return encuentroejb.listarSantafe();
+
+    }
+
+    public List<EncuentroTorneo> listarSanCris() {
+
+        return encuentroejb.listarSancristobal();
+
+    }
+
+    public List<EncuentroTorneo> listarUsme() {
+
+        return encuentroejb.listarUsme();
+
+    }
+
+    public List<EncuentroTorneo> listarTunjuelo() {
+
+        return encuentroejb.listarTunjuelito();
+
+    }
+
+    public List<EncuentroTorneo> listarBosa() {
+
+        return encuentroejb.listarBosa();
+
+    }
+
     public List<EncuentroTorneo> listarEngativa() {
 
         return encuentroejb.listarEngativa();
@@ -118,9 +160,57 @@ public class EncuentroTorneoManagedBean implements Serializable, InterfaceContro
 
     }
 
-    public List<EncuentroTorneo> listarBosa() {
+    public List<EncuentroTorneo> listarBarriosU() {
 
-        return encuentroejb.listarBosa();
+        return encuentroejb.listarBarr();
+
+    }
+
+    public List<EncuentroTorneo> listarTeusaq() {
+
+        return encuentroejb.listarTeus();
+
+    }
+
+    public List<EncuentroTorneo> listarLosMartires() {
+
+        return encuentroejb.listarMarti();
+
+    }
+
+    public List<EncuentroTorneo> listarAntonio() {
+
+        return encuentroejb.listarAntoni();
+
+    }
+
+    public List<EncuentroTorneo> listarPuenteAr() {
+
+        return encuentroejb.listarPteAranda();
+
+    }
+
+    public List<EncuentroTorneo> listarCandelaria() {
+
+        return encuentroejb.listarCandela();
+
+    }
+
+    public List<EncuentroTorneo> listarRafaelU() {
+
+        return encuentroejb.listarRafaelU();
+
+    }
+
+    public List<EncuentroTorneo> listarCBolivar() {
+
+        return encuentroejb.listarCiudadB();
+
+    }
+
+    public List<EncuentroTorneo> listarSumapaz() {
+
+        return encuentroejb.listarSumapaz();
 
     }
 

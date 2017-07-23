@@ -96,9 +96,10 @@ public class desempenioFisicoManagedBean {
                     resistencia = valoraciones.get(i).getNota();
                     break;
 
-                default:
+                case 3:
                     flexibilidad = valoraciones.get(i).getNota();
-
+                
+                default:
             }
             Valoracion v = valoraciones.get(i);
 

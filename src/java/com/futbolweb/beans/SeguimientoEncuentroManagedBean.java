@@ -7,8 +7,11 @@ package com.futbolweb.beans;
 
 import com.futbolweb.converters.InterfaceController;
 import com.futbolweb.login.beans.SessionManagedBean;
+import com.futbolweb.persistence.entities.Entrenador;
 import com.futbolweb.persistence.entities.Jugador;
 import com.futbolweb.persistence.entities.SeguimientoEncuentro;
+import com.futbolweb.persistence.entities.Usuario;
+import static com.futbolweb.persistence.entities.Usuario_.entrenador;
 import com.futbolweb.persistence.facades.SeguimientoEncuentroFacade;
 import java.io.IOException;
 import java.io.Serializable;
@@ -34,7 +37,7 @@ import org.primefaces.model.chart.ChartSeries;
 @RequestScoped
 public class SeguimientoEncuentroManagedBean implements Serializable, InterfaceController<SeguimientoEncuentro> {
 
-    
+    private Entrenador entrenador;
     private List<SeguimientoEncuentro> lista;
     private BarChartModel graf;
     private SeguimientoEncuentro seguimientoencuentro;
@@ -61,8 +64,7 @@ public class SeguimientoEncuentroManagedBean implements Serializable, InterfaceC
     public void setSesionM(SessionManagedBean sesionM) {
         this.sesionM = sesionM;
     }
-    
-    
+
     public SeguimientoEncuentro getSeguimientoencuentro() {
         return seguimientoencuentro;
     }
@@ -74,11 +76,22 @@ public class SeguimientoEncuentroManagedBean implements Serializable, InterfaceC
     @PostConstruct
     public void init() {
         seguimientoencuentro = new SeguimientoEncuentro();
+        entrenador = new Entrenador();
 
     }
 
     public void registrarSeguimientoEncuentro() {
-        segef.create(seguimientoencuentro);
+        try {
+            Usuario u = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            entrenador.setIdEntrenador(u.getIdUsuario());
+            seguimientoencuentro.setIdEntrenador(entrenador);
+            System.out.println(seguimientoencuentro.getIdEntrenador());
+            segef.create(seguimientoencuentro);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("registrarseguimientoencuentro.xhtml");
+
+        } catch (Exception e) {
+
+        }
     }
 
     public void eliminarSeguimientoEncuentro(SeguimientoEncuentro segui) {
@@ -98,15 +111,21 @@ public class SeguimientoEncuentroManagedBean implements Serializable, InterfaceC
         return "";
     }
 
+    public List<SeguimientoEncuentro> listarSeguimientoEncuentroEntrenador() {
+
+        return getSesionM().getUsuarioSesion().getEntrenador().getSeguimientoEncuentroList();
+
+    }
+
     public void graficar() {
-        graf=new BarChartModel();
+        graf = new BarChartModel();
         for (int i = 0; i < lista.size(); i++) {
-            ChartSeries serie=new BarChartSeries();
+            ChartSeries serie = new BarChartSeries();
             serie.setLabel(lista.get(i).obtenerLlavePrimaria());
             serie.set(lista.get(i).getIdJugador(), lista.get(i).getGoles());
             graf.addSeries(serie);
         }
-     
+
         graf.setTitle("Goles por jugador");
         graf.setLegendPosition("ne");
         Axis xAxis = graf.getAxis(AxisType.X);
@@ -129,8 +148,8 @@ public class SeguimientoEncuentroManagedBean implements Serializable, InterfaceC
         } catch (Exception e) {
         }
     }
-    
-     public void guardarCambiosEncuentro(SeguimientoEncuentro s) throws IOException {
+
+    public void guardarCambiosEncuentro(SeguimientoEncuentro s) throws IOException {
 
         try {
             segef.edit(seguimientoencuentro);
@@ -146,9 +165,9 @@ public class SeguimientoEncuentroManagedBean implements Serializable, InterfaceC
         return "registrarseguimientoencuentro.xhtml";
     }
 
-    public List<SeguimientoEncuentro> listarPropioSeguimientoEncuentro(){
-    
-    return getSesionM().getUsuarioSesion().getJugador().getSeguimientoEncuentroList();
+    public List<SeguimientoEncuentro> listarPropioSeguimientoEncuentro() {
+
+        return getSesionM().getUsuarioSesion().getJugador().getSeguimientoEncuentroList();
     }
 
 }

@@ -240,6 +240,8 @@ th {
   }
   .navbar {
     display: none;
+    overflow: scroll;
+    
   }
   .btn > .caret,
   .dropup > .btn > .caret {
