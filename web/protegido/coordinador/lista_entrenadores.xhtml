@@ -4,279 +4,194 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-          
       xmlns:t="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
-    
 
     <body>
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
 
             <ui:define name="content">
+
+                <!-- Sidebar -->
+                <script>
+                    $(document).ready(function () {
+                        $('#tablita').DataTable({
+                            dom: 'Bfrtip',
+                            buttons: [
+                                'pdf', 'excel', 'csv',
+                                {
+                                    extend: 'pdfHtml5',
+                                    customize: function (doc) {
+                                        doc.content.splice(1, 0, {
+                                            margin: [0, 0, 0, 12],
+                                            alignment: 'center',
+                                            image: 'data:image/png;base64,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'
+
+                                        });
+                                    }
+                                }
+
+                            ]
+
+                        });
+                    });
+
+
+                </script>
+                <!-- /#sidebar-wrapper -->
+
+                <!-- Page Content -->
                 
+                
+                
+                                <script language="JavaScript">
+                                function confirmar()
+                                {
+                                    if (!confirm("¿Deseas eliminar este registro?"))
+                                    {
+                                        return false;
+                                    } else
+                                    {
 
-                            <div id="wrapper">
-
-     
-        <div id="page-wrapper">
-            <div class="row">
-               <br/>
-               <br/>
-               <br/>
-                <!-- /.col-lg-12 -->
-            </div>
-           
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-8">
-                    
-                    
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> <center>Lista de Jugadores Actuales</center>
-                            <div class="pull-right">
-                            
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="row">
-                                 <f:view>
-
-
-                                    <h:form>
-                                        
-                                        <h:dataTable class="table table-bordered table-hover table-striped" value="#{usuarioManagedBean.entrenador}" var="item">
-                                           
-                                             <h:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="Codigo Entrenador"/>
-                                                </f:facet>
-                                                 <h:outputText value="#{item.idUsuario}"/>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="Documento"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.documento}"/>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="Nombre"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.primerNombre} #{item.primerApellido}"/>
-                                            </h:column>
-                                           <h:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="Correo"/>
-                                                </f:facet>
-                                                <h:outputText value="#{item.correo}"/>
-                                            </h:column>
-                                             <h:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="Experiencia"/>
-                                                </f:facet>
-                                                 <h:outputText value="#{item.entrenador.experiencia}"/>
-                                            </h:column>
-                                            <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Diploma"/>
-                                            </f:facet>
-                                               <h:outputText />
-                                               #{item.entrenador.diploma}
-                                        </h:column>
-                                       
-                                         
-                                           
-                                      
-                                           
-                                           
-                                        </h:dataTable>
-                                    </h:form>
-                                </f:view>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                
-                                      <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <a  id="modal-41991" href="#modal-container-41991" role="button" class="btn btn-outline btn-suceess btn btn-default btn-block"  data-toggle="modal">Registrar Jugador</a>
-
-                                        <div class="modal fade" id="modal-container-41991" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                                            ×
-                                                        </button>
-
-                                                    </div>
-                                                    <center>
-                                                        <h1><h:outputText value="Registro Jugador"/></h1>
-                                                    </center>
-
-                                                    <div class="modal-body">
-                                                        <center>
-                                                         
-
-                                                           <script>
-                                function valida(e) {
-                                    tecla = (document.all) ? e.keyCode : e.which;
-
-                                    //Tecla de retroceso para borrar, siempre la permite
-                                    if (tecla == 8) {
                                         return true;
                                     }
-
-                                    // Patron de entrada, en este caso solo acepta numeros
-                                    patron = /[0-9]/;
-                                    tecla_final = String.fromCharCode(tecla);
-                                    return patron.test(tecla_final);
                                 }
-                            </script>                                  
+                            </script>
 
-    <h:form enctype="multipart/form-data">
-        <h:panelGrid columns="3">
-            <h:outputLabel value="Codigo Entrenador:" for="idEntrenador" />
-                           
-            <h:inputText class="form-control" maxlength="4" onkeypress="return valida(event)" t:placeholder="Codigo Ej: 0001 " id="idEntrenador" value="#{uploadFileDiplomaManagedBean.entrenador.idEntrenador}" title="IdEntrenador" required="true" requiredMessage="The IdEntrenador field is required."/>
-            <br/>
-            <br/>
-            <h:outputLabel value="Experiencia:" for="experiencia" />
-            <h:inputTextarea t:placeholder="Experiencia: 34 años en el club deportibo Expreso Rojo. Amplio en las ramas de fisica y conocimientos en tactica deportiva."  class="form-control"   rows="4" cols="30" id="experiencia" value="#{uploadFileDiplomaManagedBean.entrenador.experiencia}" title="Experiencia" />
-            <br/>
-            <br/>
-            <h:outputLabel value="Diploma:" for="diploma" />
-            <h:inputFile class="form-control"  id="diploma" value="#{uploadFileDiplomaManagedBean.file}"></h:inputFile>
-            <!--<h:inputTextarea rows="4" cols="30" id="diploma" value="#{uploadFileDiplomaManagedBean.entrenador.diploma}" title="Diploma" />-->
-            
-       <br/>
-            <br/>
-        </h:panelGrid>
-        
-        <br/>
-            <br/>
-        <h:commandButton class="btn btn-outline btn-success"  value="Agregar Carta Profesional" action="#{uploadFileDiplomaManagedBean.uploadFileDiploma()}"/>
-    </h:form>
+                <div class="rowContainer">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <br></br>
 
-                                                        </center>
-                                                    </div>
-                                                    <div class="modal-footer">
+                        <header>
+                            <h1 class="page-header text-center">Entrenadores</h1>
+                        </header>
+                        <center>
+                             <img style="width: 150px; height: 150px;" src="../../resources/images/paginainicio/Logo.png" alt=""/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p>Aqui encontrara toda la informacion de sus Entrenadores </p>        
+                            <br></br>
 
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                            Cerrar
-                                                        </button> 
+                     
 
-                                                    </div>
-                                                </div>
+                        </center>
 
-                                            </div>
+                        <h:form prependId="false">
+                            <h:dataTable id="tablita" class="table table-striped table-bordered" value="#{usuarioManagedBean.entrenador}" var="item">
+                                 <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Editar/Eliminar"/>
+                                    </f:facet>
+                                   <p:commandButton class="btn btn-outline btn-warning" value="E" title="Editar Jugador" action="#{usuarioManagedBean.verInvitado(item)}" onclick="PF('insertar').show();"  update=":fEdit"></p:commandButton>
 
-                                        </div>
+                                    <p:commandButton class="btn btn-outline btn-danger"  ajax="false"  title="Eliminar Jugador" value="E" action="#{usuarioManagedBean.eliminarUsuarioInvitadi(item)}" onclick="javascript:return confirmar()" update=":fEdit"/>
+
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Documento"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.documento}"/>
+                                </h:column>
+                                  <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Nombre"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.primerNombre} #{item.primerApellido}"/>
+                                </h:column>
+                                  <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Correo Entrenador"/>
+                                    </f:facet>
+                                      <h:outputText value="#{item.correo}"/>
+                                </h:column>
+                                  <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Experiencia"/>
+                                    </f:facet>
+                                      <h:outputText value="#{item.entrenador.experiencia}"/>
+                                </h:column>
+                                  <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Hoja de vida"/>
+                                    </f:facet>
+                                    
+                                      <img class="weer"  src="#{request.contextPath}/#{item.entrenador.diploma}"/>
+                                </h:column>
+
+
+
+                            </h:dataTable>
+                        </h:form>
+
+                        <br/>
+                   <div aria-hidden="true">
+                                <p:dialog class="form-control"  widgetVar="insertar"
+                                          modal="true"
+                                          position="top"
+                                          resizable="false"
+                                          draggable="true"
+                                          closable="true">
+
+
+                                    <div class="modal-header">
+                                        <center><h3>Edición de Entrenadores</h3></center>
+                                        <h:form id="fEdit">
+
+
+                                            <p:outputLabel value="IdUsuario:" for="idUsuario" style="visibility:hidden" />
+                                            <p:inputText  style="visibility:hidden"  id="idUsuario" value="#{usuarioManagedBean.usuario.idUsuario}" title="IdUsuario" required="true" requiredMessage="The IdUsuario field is required."/>
+                                            <br/>
+                                            <p:outputLabel value="Documento:" for="documento" />
+                                            <h:inputText class="form-control" id="documento" value="#{usuarioManagedBean.usuario.documento}" title="Documento" required="true" requiredMessage="The Documento field is required."/>
+                                            <p:outputLabel value="Nombre:" for="primerNombre" />
+                                            <h:inputText class="form-control" id="primerNombre" value="#{usuarioManagedBean.usuario.primerNombre}" title="PrimerNombre" required="true" requiredMessage="The PrimerNombre field is required."/>
+                                            <p:outputLabel value="Apellido:" for="primerApellido" />
+                                            <h:inputText class="form-control" id="primerApellido" value="#{usuarioManagedBean.usuario.primerApellido}" title="PrimerApellido" required="true" requiredMessage="The PrimerApellido field is required."/>
+                                            <p:outputLabel style="visibility:hidden" value="Clave:" for="clave" />
+                                            <h:inputText  style="visibility:hidden" class="form-control" id="clave" value="#{usuarioManagedBean.usuario.clave}" title="Clave" required="true" requiredMessage="The Clave field is required."/>
+                                            <p:outputLabel value="Fecha Nacimento:" for="fechaDeNacimento" />
+                                            <h:inputText class="form-control" id="fechaDeNacimento" value="#{usuarioManagedBean.usuario.fechaDeNacimento}" title="FechaDeNacimento" required="true" requiredMessage="The FechaDeNacimento field is required.">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:inputText>
+                                            <p:outputLabel value="Correo:" for="correo" />
+                                            <h:inputText class="form-control" id="correo" value="#{usuarioManagedBean.usuario.correo}" title="Correo" required="true" requiredMessage="The Correo field is required."/>
+
+                                            <center>
+                                                <p:outputLabel value="Rol:" for="idTipoRol" />
+                                                <h:selectOneMenu class="form-control"  id="idTipoRol" value="#{usuarioManagedBean.usuario.idTipoRol}" required="true" requiredMessage="The IdTipoRol field is required.">
+                                                    <!-- TODO: update below reference to list of available items-->
+                                                    <f:selectItems value="#{rolManagedBean.listarRolUsuario()}" var="rol" itemLabel="#{rol.nombreRol}"/>
+                                                </h:selectOneMenu>
+
+                                                <p:outputLabel  value="Estado:" for="idEstado" />
+                                                <h:selectOneMenu class="form-control"  id="idEstado" value="#{usuarioManagedBean.usuario.idEstado}" required="true" requiredMessage="The IdEstado field is required.">
+                                                    <!-- TODO: update below reference to list of available items-->
+                                                    <f:selectItems value="#{estadoUsuarioManagedBean.listarEstadoUsuario()}" var="estado" itemLabel="#{estado.nombreEstado}"/>
+                                                </h:selectOneMenu>
+
+                                            </center>
+
+
+                                            <center>
+                                                <br/>
+                                                <h:commandButton actionListener="#{usuarioManagedBean.redireccionarUsuarioEntrenador()}" class="btn btn-outline btn-success" value="Editar informacion Entrenador" action="#{usuarioManagedBean.editarInvitados()}" />
+
+                                            </center>
+
+
+                                        </h:form>
 
                                     </div>
-                                </div>
+                                </p:dialog>
                             </div>
-                             
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"><center>Equipos actuales</center></i> 
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <f:view>
-
-
-                                <h:form>
-                                   
-                                    <h:dataTable class="table table-bordered table-hover table-striped" value="#{equipoManagedBean.listarEquipos()}" var="item">
-                                       
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Nombre Equipo"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.nombreEquipo}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Categoria"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.fkIdCategoria.nombreCategoria}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Entrenador"/>
-                                            </f:facet>
-                                            <h:outputText value="Documento: #{item.idEntrenador.usuario.documento} Nombres: #{item.idEntrenador.usuario.primerNombre} #{item.idEntrenador.usuario.primerApellido}"/>
-                                        </h:column>
-                                    </h:dataTable>
-                                </h:form>
-                            </f:view>
-                             
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class=" fa-fw"></i><center>
-                                Categorias Actuales
-                            </center> 
-                        </div>
-                        <div class="panel-body">
-                                             <f:view>
-
-
-                            <h:form>
-                                
-                                <h:dataTable class="table table-bordered table-hover table-striped" value="#{categoriaManagedBean.listCategorias()}" var="item">
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Numero de Categoria"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idCategoria}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Nombre Categoria"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.nombreCategoria}"/>
-                                    </h:column>
-                                </h:dataTable>
-                            </h:form>
-                        </f:view>
-                           
-                        </div>
-    
-                    </div>
-                    <!-- /.panel -->
                    
-                    <!-- /.panel .chat-panel -->
+                    </div>
+                    <div class="col-lg-1"></div>
                 </div>
-                <!-- /.col-lg-4 -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /#page-wrapper -->
-
-    </div>
-
             </ui:define>
 
         </ui:composition>

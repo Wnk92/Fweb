@@ -52,7 +52,7 @@
                                 <thead>
 
                                     <tr >
-                                        <th class="hidden-xs"><center><em class="fa fa-cog">icono</em></center></th>
+                                        <th class="hidden-xs"><center><em class="fa fa-cog">Opciones</em></center></th>
                                         <th class="hidden-xs">Acciones</th>
                                         <th class="hidden-xs">Documento</th>
                                         <th class="hidden-xs">Jugador</th>
@@ -84,7 +84,6 @@
 
                                                         <p:commandButton id="modal-293136" class="btn btn-default" t:href="#modal-container-293136" t:role="button"  t:data-toggle="modal" actionListener="#{emailController2.setDestinatario(item.idAcudiente.correo)}" value="Enviar Correo" />
                                                         <li role="separator" class="divider"></li>
-                                                        <li><a href="#">Detalles Acudiente</a></li>
                                                         
 
 
@@ -94,8 +93,8 @@
                                             </td>
 
                                             <td  class="hidden-xs" align="center">
-                                                <p:commandButton class="btn btn-outline btn-warning" action="#{usuarioManagedBean.verInvitado(item)}" value="E" onclick="PF('insertar').show();"  update=":editinvi"/>
-                                                <h:commandButton   class="btn btn-outline btn-danger" value="el" action="#{usuarioManagedBean.eliminarUsuarioInvitadi(item)}"/>
+                                                <p:commandButton class="btn btn-outline btn-warning" action="#{usuarioManagedBean.verInvitado(item)}" value="E" title="Editar" onclick="PF('insertar').show();"  update=":editinvi"/>
+                                                <h:commandButton   class="btn btn-outline btn-danger" value="el" title="Eliminar"  onclick="javascript:return confirmar()"  action="#{usuarioManagedBean.eliminarUsuarioInvitadi(item)}"/>
                                             </td>
 
 
@@ -127,16 +126,7 @@
 
                                 </tbody>
                             </table>
-                            <br></br>
-                            <h:commandLink title="Descargar tabla en pdf">
-                                <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
-                                <p:dataExporter type="pdf" target="tabCat" fileName="ListadoDeCategorias"/>
-                            </h:commandLink>
-                            <h:commandLink title="Descargar tabla en Excel">
-                                <img  src="../../resources/images/pdf/excel.png" alt="Descargar en Ecxel" style="width: 55px; height: 55px;"/>
-                                <p:dataExporter type="xls" target="tabCat" fileName="ListadoDeCategorias"/>
-                            </h:commandLink>
-
+                         
 
 
 
@@ -144,6 +134,33 @@
 
 
                         </h:form>
+                           <script language="JavaScript">
+                                function confirmar()
+                                {
+                                    if (!confirm("¿Deseas eliminar este registro?"))
+                                    {
+                                        return false;
+                                    } else
+                                    {
+
+                                        return true;
+                                    }
+                                }
+                            </script>
+                        
+                               <script language="JavaScript">
+                                function confirmar2()
+                                {
+                                    if (!confirm("¿Deseas asignar este acudiente a  este Jugador?"))
+                                    {
+                                        return false;
+                                    } else
+                                    {
+
+                                        return true;
+                                    }
+                                }
+                            </script>
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-10">
@@ -201,7 +218,7 @@
 
 
                                 <div class="modal-header">
-                                    <center><h3>Edición de categorías</h3></center>
+                                    <center><h3>Asignacion Acudiente y Jugador</h3></center>
                                    <h:form id="editinvi">
 
 
@@ -224,18 +241,19 @@
                                     <h:inputText class="form-control" id="correo" value="#{usuarioManagedBean.usuario.correo}" title="Correo" required="true" requiredMessage="The Correo field is required."/>
                                     <h:outputLabel value="Acudiente:" for="idAcudiente" />
                                     <h:selectOneMenu class="form-control"  id="idAcudiente" value="#{usuarioManagedBean.usuario.idAcudiente}" title="IdAcudiente" >
+                                       <f:selectItem itemValue="#{null}" itemLabel="Seleccione" />
                                         <!-- TODO: update below reference to list of available items-->
                                         <f:selectItems value="#{usuarioManagedBean.activos}" var="acudient" itemLabel="#{acudient.documento}, #{acudient.primerNombre} #{acudient.primerApellido}" />
                                     </h:selectOneMenu>
                                     <center>
-                                        <p:outputLabel value="Rol:" for="idTipoRol" />
-                                        <h:selectOneMenu class="form-control"  id="idTipoRol" value="#{usuarioManagedBean.usuario.idTipoRol}" required="true" requiredMessage="The IdTipoRol field is required.">
+                                        <p:outputLabel style="visibility:hidden"  value="Rol:" for="idTipoRol" />
+                                        <h:selectOneMenu style="visibility:hidden"  class="form-control"  id="idTipoRol" value="#{usuarioManagedBean.usuario.idTipoRol}" required="true" requiredMessage="The IdTipoRol field is required.">
                                             <!-- TODO: update below reference to list of available items-->
                                             <f:selectItems value="#{rolManagedBean.listarRolUsuario()}" var="rol" itemLabel="#{rol.nombreRol}"/>
                                         </h:selectOneMenu>
 
-                                        <p:outputLabel  value="Estado:" for="idEstado" />
-                                        <h:selectOneMenu class="form-control"  id="idEstado" value="#{usuarioManagedBean.usuario.idEstado}" required="true" requiredMessage="The IdEstado field is required.">
+                                        <p:outputLabel style="visibility:hidden"   value="Estado:" for="idEstado" />
+                                        <h:selectOneMenu style="visibility:hidden"  class="form-control"  id="idEstado" value="#{usuarioManagedBean.usuario.idEstado}" required="true" requiredMessage="The IdEstado field is required.">
                                             <!-- TODO: update below reference to list of available items-->
                                             <f:selectItems value="#{estadoUsuarioManagedBean.listarEstadoUsuario()}" var="estado" itemLabel="#{estado.nombreEstado}"/>
                                         </h:selectOneMenu>
@@ -243,8 +261,9 @@
                                     </center>
 
 
+                                    <br/>
                                     <center>
-                                        <h:commandButton actionListener="#{usuarioManagedBean.redireccionarUsuarioJugadorAcudiente()}" class="btn btn-outline btn-success" value="Registrar" action="#{usuarioManagedBean.editarInvitados()}" />
+                                        <h:commandButton onclick="javascript:return confirmar2()" actionListener="#{usuarioManagedBean.redireccionarUsuarioJugadorAcudiente()}" class="btn btn-outline btn-success" value="Asignar Acudiente al Jugador" action="#{usuarioManagedBean.editarInvitados()}" />
 
                                     </center>
 

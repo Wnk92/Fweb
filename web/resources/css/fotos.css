@@ -20,6 +20,6 @@ img.weer:hover {
     transition-duration: 0.4s;
     -webkit-transition-duration: 0.4s; /* Safari */
     box-shadow: 10px 10px 5px #0f0f0f;
-    z-index: 9000;
+   
     }
 
