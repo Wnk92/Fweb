@@ -4,10 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-          
-      xmlns:t="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
-    
 
     <body>
 
@@ -15,52 +12,127 @@
 
             <ui:define name="content">
                 
-
-                <!-- Sidebar -->
-
-                <!-- /#sidebar-wrapper -->
-
-                <!-- Page Content -->
+                <script type="text/javascript" src="../../resources/js/Chart.bundle.js"></script>
+                <script type="text/javascript" src="../../resources/js/Chart.bundle.min.js"></script>
+                <script type="text/javascript" src="../../resources/js/Chart.js"></script>
+                <script type="text/javascript" src="../../resources/js/Chart.min.js"></script>
 
                 <div class="rowContainer">
                     <div class="col-lg-1"></div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                    <div class="col-lg-10">
                         <br></br>
 
                         <header>
-                            <h1 class="page-header text-center">Usuarios Invitados</h1>
+                            <h1 class="page-header text-center">Equipos programados</h1>
                         </header>
-                         <center>
-                             <p>Recuerde que al momento de cambiar el <b>Rol</b> o <b>Estado</b> del usuario este automáticamente desaparecerá del estado actual <b>En Espera.</b></p>        
-                        <br></br>
-                       
-                         
+                      
+                        <canvas id="bar-chart" width="3500" height="900"></canvas>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+                        <script>
+                            new Chart(document.getElementById("bar-chart"), {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ["Juvenil", "Infantil", "Pre-juvenil", "Élite", "Superior"],
+                                    datasets: [
+                                        {
+                                            label: "Population (millions)",
+                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                            data: [#{equipoManagedBean.juvenil().size()}, #{equipoManagedBean.infantil().size()}, #{equipoManagedBean.Prejuvenil().size()}, #{equipoManagedBean.elite().size()}, #{equipoManagedBean.superior().size()}]
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    legend: {display: false},
+                                    title: {
+                                        display: true,
+                                    }
+                                }
+                            });
+                        </script>
+                        <center>
+                               
+                            <br></br>
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a id="modal-41991" href="#modal-container-41991" role="button" class="btn btn-outline btn-success"  data-toggle="modal">Registrar equipo</a>
+
+                                        <div class="modal fade" id="modal-container-41991" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                            ×
+                                                        </button>
+
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h:form id="fCreate">
+                                                            <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
+
+                                                            <center><h1><h:outputText value="Registro de equipos"/></h1></center>
+
+                                                            <br/>
+                                                            <div class="rowContainer">
+
+                                                                <h:outputLabel class="form-control" value="Nombre Equipo:" for="nombreEquipo" />
+                                                                <h:inputText class="form-control" id="nombreEquipo" value="#{equipoManagedBean.equipo.nombreEquipo}" title="NombreEquipo" required="true" requiredMessage="The NombreEquipo field is required."/>
+                                                                <h:outputLabel class="form-control" value="Categoria:" for="fkIdCategoria" />
+                                                                <h:selectOneMenu class="form-control" id="fkIdCategoria" value="#{equipoManagedBean.equipo.fkIdCategoria}" title="FkIdCategoria" required="true" requiredMessage="The FkIdCategoria field is required.">
+                                                                    <!-- TODO: update below reference to list of available items-->
+
+                                                                    <f:selectItem itemValue="#{null}" itemLabel="Seleccione" />
+                                                                    <f:selectItems value="#{categoriaManagedBean.listCategorias()}" var="categpria" itemLabel="#{categpria.nombreCategoria}"/>
+                                                                </h:selectOneMenu>
+                                                                <h:outputLabel class="form-control" value="Entrenador:" for="idEntrenador" />
+                                                                <h:selectOneMenu class="form-control" id="idEntrenador" value="#{equipoManagedBean.equipo.idEntrenador}" title="IdEntrenador" required="true" requiredMessage="The IdEntrenador field is required.">
+                                                                    <!-- TODO: update below reference to list of available items-->
+
+                                                                    <f:selectItem itemValue="#{null}" itemLabel="Seleccione" />
+                                                                    <f:selectItems class="form-control" value="#{entrenadorManagedBean.listarEntrenador()}" var="entrenador" itemLabel="#{entrenador.usuario.documento}, #{entrenador.usuario.primerNombre} #{entrenador.usuario.primerApellido}"/>
+                                                                </h:selectOneMenu>
+
+                                                                <br/>
+                                                                <br/>
+                                                                <h:commandButton class="btn btn-outline btn-success" value="Registrar Equipo" action="#{equipoManagedBean.createEquipo()}"/>
+
+                                                            </div>
+                                                        </h:form>
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                            Cerrar
+                                                        </button> 
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
 
                         </center>
-                          
+
                         <h:form id="dqw">
-                           
 
 
 
-
-
-
-
-
-                            <table id="table-transform" value="#{usuarioManagedBean.invitado}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200, 300, 400, 500, 1000]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
+                            <table id="table-transform"  value="#{equipoManagedBean.listarEquipos()}" var="item" class="table table-hover" data-toggle="table" data-short-name="fechaRegistro" data-short-order="desc" data-show-toogle="true" data-show-columns="true" data-side-pagination="client" data-page-list="[5, 10, 20, 50, 100, 200]" data-row-style="rowStyle" data-pagination="true" data-search="true" >
                                 <thead>
 
                                     <tr >
-                                        <th class="hidden-xs">Option</th>
-                                        <th class="hidden-xs">Documento</th>
-                                         <th class="hidden-xs">Nombre</th>
-                                         <th class="hidden-xs">Apellido</th>
-                                         <th class="hidden-xs">Fecha Nacimiento</th>
-                                         <th class="hidden-xs">Correo</th>
-                                         <th class="hidden-xs">Rol</th>
-                                         <th class="hidden-xs">Estado</th>
-                                       
+                                        <th class="col-md-4"><center><em class="fa fa-cog">Editar/Eliminar</em></center></th>
+
+                                        <th class="hidden-xs">Nombre</th>
+
+                                        <th class="hidden-xs">Entrenador</th>
 
 
 
@@ -68,29 +140,20 @@
                                 </thead>
                                 <tbody>
 
-                                    <ui:repeat  value="#{usuarioManagedBean.invitado}" var="item">
+                                    <ui:repeat  value="#{equipoManagedBean.listarEquipos()}" var="item">
 
 
                                         <tr>
-                                                  <td  class="hidden-xs" align="center">
-                                            <p:commandButton class="btn btn-outline btn-warning" action="#{usuarioManagedBean.verInvitado(item)}" value="E" onclick="PF('insertar').show();"  update=":editinvi"/>
-                                            <h:commandButton   class="btn btn-outline btn-danger" value="el" title="Eliminar" onclick="javascript:return confirmar()" action="#{usuarioManagedBean.eliminarUsuarioInvitadi(item)}"/>
+                                            <td  class="hidden-xs" align="center">
+                                                <p:commandButton class="btn btn-outline btn-warning" value="e" action="#{equipoManagedBean.redireccionarEquipo(item)}" onclick="PF('formEdit').show();" update=":fEdit"/>
+
+                                                <p:commandButton class="btn btn-outline btn-danger" ajax="false"  value="e" action="#{equipoManagedBean.eliminarEquipo(item)}" onclick="javascript:return confirmar()"  update=":fEdit"/>
                                             </td>
 
-                                         
-                                            <td class="hidden-xs">#{item.documento}</td>
-                                            <td class="hidden-xs">#{item.primerNombre}</td>
-                                            <td class="hidden-xs">#{item.primerApellido}</td>
-                                            <td class="hidden-xs">
-                                                <h:outputText value="#{item.fechaDeNacimento}">
-                                                    <f:convertDateTime pattern="dd-MM-yyyy">
-                                                        
-                                                    </f:convertDateTime>
-                                                </h:outputText></td>
-                                            <td class="hidden-xs">#{item.correo}</td>
-                                            <td class="hidden-xs">#{item.idTipoRol.nombreRol}</td>
-                                            <td class="hidden-xs">#{item.idEstado.nombreEstado}</td>
-                                         
+
+                                            <td >#{item.nombreEquipo}</td>
+
+                                            <td>#{item.idEntrenador.usuario.primerNombre} #{item.idEntrenador.usuario.primerApellido}</td>
 
 
 
@@ -106,7 +169,7 @@
                                 </tbody>
                             </table>
                             <br></br>
-                             <h:commandLink title="Descargar tabla en pdf">
+                            <h:commandLink title="Descargar tabla en pdf">
                                 <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
                                 <p:dataExporter type="pdf" target="tabCat" fileName="ListadoDeCategorias"/>
                             </h:commandLink>
@@ -116,9 +179,7 @@
                             </h:commandLink>
 
 
-
-
-                                <script language="JavaScript">
+                            <script language="JavaScript">
                                 function confirmar()
                                 {
                                     if (!confirm("¿Deseas eliminar este registro?"))
@@ -131,92 +192,66 @@
                                     }
                                 }
                             </script>
-                            
-                          
 
 
-
-                         
                         </h:form>
-                          <div aria-hidden="true">
-                                <p:dialog class="form-control"  widgetVar="insertar"
-                                          modal="true"
-                                          position="top"
-                                          resizable="false"
-                                          draggable="true"
-                                          closable="true">
 
 
-                                    <div class="modal-header">
-                                        <center><h3>Usuario Invitado</h3></center>
-                                        <h:form id="editinvi">
+                        <br/>
+                        <div aria-hidden="true">
+                            <p:dialog class="form-control" widgetVar="formEdit"
+                                      modal="true"
+                                      position="top"
+                                      resizable="false"
+                                      draggable="true"
+                                      closable="true">
+
+                                <div class="modal-header">
+                                    <center><h1><h:outputText value="Edición de equipos"/></h1></center>
+
+                                    <h:form id="fEdit">
+
+                                        <h:outputLabel  value="IdEquipo:" for="idEquipo" style="visibility:hidden" />
+                                        <h:inputText class="form-control" id="idEquipo" style="visibility:hidden" value="#{equipoManagedBean.equipo.idEquipo}" title="IdEquipo" required="true" requiredMessage="The IdEquipo field is required."/>
 
 
-                                            <p:outputLabel value="IdUsuario:" for="idUsuario" style="visibility:hidden" />
-                                            <p:inputText  style="visibility:hidden"  id="idUsuario" value="#{usuarioManagedBean.usuario.idUsuario}" title="IdUsuario" required="true" requiredMessage="The IdUsuario field is required."/>
-                                            <br/>
-                                            <p:outputLabel value="Documento:" for="documento" />
-                                            <h:inputText class="form-control" id="documento" value="#{usuarioManagedBean.usuario.documento}" title="Documento" required="true" requiredMessage="The Documento field is required."/>
-                                            <p:outputLabel value="Nombre:" for="primerNombre" />
-                                            <h:inputText class="form-control" id="primerNombre" value="#{usuarioManagedBean.usuario.primerNombre}" title="PrimerNombre" required="true" requiredMessage="The PrimerNombre field is required."/>
-                                            <p:outputLabel value="Apellido:" for="primerApellido" />
-                                            <h:inputText class="form-control" id="primerApellido" value="#{usuarioManagedBean.usuario.primerApellido}" title="PrimerApellido" required="true" requiredMessage="The PrimerApellido field is required."/>
-                                            <p:outputLabel style="visibility:hidden" value="Clave:" for="clave" />
-                                            <h:inputText  style="visibility:hidden" class="form-control" id="clave" value="#{usuarioManagedBean.usuario.clave}" title="Clave" required="true" requiredMessage="The Clave field is required."/>
-                                            <p:outputLabel value="Fecha Nacimento:" for="fechaDeNacimento" />
-                                            <h:inputText class="form-control" id="fechaDeNacimento" value="#{usuarioManagedBean.usuario.fechaDeNacimento}" title="FechaDeNacimento" required="true" requiredMessage="The FechaDeNacimento field is required.">
-                                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                                            </h:inputText>
-                                            <p:outputLabel value="Correo:" for="correo" />
-                                            <h:inputText class="form-control" id="correo" value="#{usuarioManagedBean.usuario.correo}" title="Correo" required="true" requiredMessage="The Correo field is required."/>
+                                        <br/>
+                                        <h:outputLabel value="Nombre Equipo:" for="nombreEquipo" />
+                                        <h:inputText class="form-control" id="nombreEquipo" value="#{equipoManagedBean.equipo.nombreEquipo}" title="NombreEquipo" required="true" requiredMessage="The NombreEquipo field is required."/>
 
-                                            <center>
-                                                <p:outputLabel value="Rol:" for="idTipoRol" />
-                                                <h:selectOneMenu class="form-control"  id="idTipoRol" value="#{usuarioManagedBean.usuario.idTipoRol}" required="true" requiredMessage="The IdTipoRol field is required.">
-                                                    <!-- TODO: update below reference to list of available items-->
-                                                    <f:selectItems value="#{rolManagedBean.listarRolUsuario()}" var="rol" itemLabel="#{rol.nombreRol}"/>
-                                                </h:selectOneMenu>
+                                        <br/>
+                                        <h:outputLabel value="Categoria:" for="fkIdCategoria" />
+                                        <h:selectOneMenu class="form-control" id="fkIdCategoria" value="#{equipoManagedBean.equipo.fkIdCategoria}" title="FkIdCategoria" required="true" requiredMessage="The FkIdCategoria field is required.">
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItem itemValue="#{null}" itemLabel="Seleccione" />
+                                            <f:selectItems value="#{categoriaManagedBean.listCategorias()}" var="categoria" itemLabel="#{categoria.nombreCategoria}"/>
+                                        </h:selectOneMenu>
+                                        <br/>  
+                                        <h:outputLabel value="Entrenador:" for="idEntrenador" />
+                                        <h:selectOneMenu class="form-control" id="idEntrenador" value="#{equipoManagedBean.equipo.idEntrenador}" title="IdEntrenador" required="true" requiredMessage="The IdEntrenador field is required.">
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItem itemValue="#{null}" itemLabel="Seleccione" />
+                                            <f:selectItems value="#{entrenadorManagedBean.listarEntrenador()}" var="entrenador" itemLabel="#{entrenador.usuario.documento}, #{entrenador.usuario.primerNombre} #{entrenador.usuario.primerApellido}"/>
 
-                                                <p:outputLabel  value="Estado:" for="idEstado" />
-                                                <h:selectOneMenu class="form-control"  id="idEstado" value="#{usuarioManagedBean.usuario.idEstado}" required="true" requiredMessage="The IdEstado field is required.">
-                                                    <!-- TODO: update below reference to list of available items-->
-                                                    <f:selectItems value="#{estadoUsuarioManagedBean.listarEstadoUsuario()}" var="estado" itemLabel="#{estado.nombreEstado}"/>
-                                                </h:selectOneMenu>
+                                        </h:selectOneMenu>
+                                        <br/>
 
-                                            </center>
+                                        <center><h:commandButton class="btn btn-outline btn-success" value="Guardar cambios" action="#{equipoManagedBean.guardarCambiosEquipo(equipoManagedBean.equipo)}" onclick="PF('formEdit').hide()"/></center>
+
+                                    </h:form>
+
+                                </div>
+
+                            </p:dialog>
 
 
-                                            <center>
-                                                <br/>
-                                                        <script language="JavaScript">
-                                function confirmar2()
-                                {
-                                    if (!confirm("¿Deseas Cambiar de Rol y Estado a este usuario?"))
-                                    {
-                                        return false;
-                                    } else
-                                    {
-
-                                        return true;
-                                    }
-                                }
-                            </script>
-                                                <h:commandButton actionListener="#{usuarioManagedBean.redireccionarUsuarioInvitado()}" onclick="javascript:return confirmar2()"  class="btn btn-outline btn-success" value="Activar usuario" action="#{usuarioManagedBean.editarInvitados()}" />
-
-                                            </center>
-
-
-                                        </h:form>
-
-                                    </div>
-                                </p:dialog>
-                            </div>
-                   
-
-                  
+                        </div>
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
+
+
+
             </ui:define>
 
         </ui:composition>

@@ -28,6 +28,17 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">
+                       <center>
+                             <img style="width: 150px; height: 150px;" src="../../resources/images/paginainicio/Logo.png" alt=""/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p>Aqui encontrara toda la informacion de sus Jugadores </p>        
+                            <br></br>
+
+                     
+
+                        </center>
                     
                     
                     <!-- /.panel -->
@@ -124,7 +135,7 @@
 
                                                         <h:form>
                                                                 <h:outputLabel value="Codigo Jugador:" for="idJugador" />
-                                                                <h:inputText t:type="number" class="form-control" id="idJugador" value="#{jugadorManagedBean.jugador.idJugador}" title="IdJugador" required="true" requiredMessage="The IdJugador field is required."/>
+                                                                <h:inputText  maxlength="4" t:type="number" class="form-control" id="idJugador" value="#{jugadorManagedBean.jugador.idJugador}" title="IdJugador" required="true" requiredMessage="The IdJugador field is required."/>
                                                                 <h:outputLabel value="Posicion:" for="posicion" />
                                                                  <h:selectOneMenu class="form-control" id="posicion" value="#{jugadorManagedBean.jugador.posicion}" title="Posicion" required="true" requiredMessage="The Posicion field is required.">
                                                             <f:selectItem itemValue="#{null}" itemLabel="Seleccione" />
@@ -141,7 +152,7 @@
                                                                     <!-- TODO: update below reference to list of available items-->
                                                                     <f:selectItems value="#{equipoManagedBean.listarEquipos()}" var="equipo" itemLabel="Equipo: #{equipo.nombreEquipo} Categoria: #{equipo.fkIdCategoria.nombreCategoria}"/>
                                                                 </h:selectOneMenu>
-                                                                <h:commandButton value="Registrar Jugador" action="#{jugadorManagedBean.creaJugador()}"/>
+                                                                <h:commandButton value="Registrar Jugador" actionListener="#{jugadorManagedBean.redireccionarJugador()}" action="#{jugadorManagedBean.creaJugador()}"/>
                                                             
                                                         </h:form>
                                                     </f:view>

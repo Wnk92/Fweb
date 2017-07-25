@@ -28,6 +28,7 @@
                         <header>
                             <center><h1 class="page-header text-center">Formulario de inscripción</h1></center>
                         </header>
+                        
 
                         <br></br>
                         <center>
@@ -39,6 +40,13 @@
                                     <div class="panel-heading">
                                         <h3 class="panel-title">
                                             Recuerde al Registrar...
+                                               <center>
+                             <img style="width: 150px; height: 150px;" src="../../resources/images/paginainicio/Logo.png" alt=""/>
+                            <br/>
+                            
+                     
+
+                        </center>
                                         </h3>
                                     </div>
                                     <div class="panel-body">
@@ -80,7 +88,21 @@
 
                                                 <!-- Inicio Pn -->
 
+  <script>
+                                function validaaa(e) {
+                                    tecla = (document.all) ? e.keyCode : e.which;
 
+                                    //Tecla de retroceso para borrar, siempre la permite
+                                    if (tecla == 8) {
+                                        return true;
+                                    }
+
+                                    // Patron de entrada, en este caso solo acepta numeros
+                                    patron = /[a-z A-Z]/;
+                                    tecla_final = String.fromCharCode(tecla);
+                                    return patron.test(tecla_final);
+                                }
+                            </script>
 
 
 
@@ -92,7 +114,7 @@
 
 
                                                         <h:outputLabel value="Primer Nombre:" for="name" />
-                                                        <h:inputText maxlength="14" id="name"  value="#{usuarioManagedBean.usuario.primerNombre}" t:placeholder="Nombres" title="PrimerNombre" class="form-control" t:type="text"  required="true"  /> 
+                                                        <h:inputText maxlength="15" onkeypress="return validaaa(event)" id="name"  value="#{usuarioManagedBean.usuario.primerNombre}" t:placeholder="Nombres" title="PrimerNombre" class="form-control" t:type="text"  required="true"  /> 
                                                     </div>
 
 
@@ -102,7 +124,7 @@
 
                                                     <div class="form"></div>
                                                     <div class="col-md-6">  <h:outputLabel value="Segundo Nombre:" for="segundoNombre" />
-                                                        <h:inputText maxlength="14" id="segundoNombre" class="form-control" t:placeholder="Nombres" value="#{usuarioManagedBean.usuario.segundoNombre}" title="SegundoNombre" />
+                                                        <h:inputText  maxlength="15" onkeypress="return validaaa(event)" id="segundoNombre" class="form-control" t:placeholder="Nombres" value="#{usuarioManagedBean.usuario.segundoNombre}" title="SegundoNombre" />
 
 
 
@@ -112,19 +134,34 @@
 
                                                 <div class="form-group" >
                                                     <div class="col-md-6">  <h:outputLabel value="Prime Aperllido:" for="primerApellido" />
-                                                        <h:inputText maxlength="20" id="primerApellido" t:placeholder="Apellido"  class="form-control" value="#{usuarioManagedBean.usuario.primerApellido}" title="PrimerApellido" required="true" requiredMessage="The PrimerApellido field is required."/>
+                                                        <h:inputText maxlength="15" onkeypress="return validaaa(event)" id="primerApellido" t:placeholder="Apellido"  class="form-control" value="#{usuarioManagedBean.usuario.primerApellido}" title="PrimerApellido" required="true" requiredMessage="The PrimerApellido field is required."/>
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group" >
                                                     <div class="col-md-6">  <h:outputLabel value="Segundo Apellido:" for="segundoApellido" />
-                                                        <h:inputText maxlength="20"  class="form-control" t:placeholder="Apellido"  id="segundoApellido" value="#{usuarioManagedBean.usuario.segundoApellido}" title="SegundoApellido" />
+                                                        <h:inputText maxlength="15" onkeypress="return validaaa(event)"  class="form-control" t:placeholder="Apellido"  id="segundoApellido" value="#{usuarioManagedBean.usuario.segundoApellido}" title="SegundoApellido" />
 
                                                     </div>
                                                 </div>
+                                                   <script>
+                                function valida3(e) {
+                                    tecla = (document.all) ? e.keyCode : e.which;
+
+                                    //Tecla de retroceso para borrar, siempre la permite
+                                    if (tecla == 8) {
+                                        return true;
+                                    }
+
+                                    // Patron de entrada, en este caso solo acepta numeros
+                                    patron = /[0-9 / ]/;
+                                    tecla_final = String.fromCharCode(tecla);
+                                    return patron.test(tecla_final);
+                                }
+                            </script>
                                                 <div class="form-group" >
                                                     <div class="col-md-6">   <h:outputLabel value="Documento:" for="documento" />
-                                                        <h:inputText maxlength="14" t:type="number" id="documento" class="form-control" t:placeholder="Documento" value="#{usuarioManagedBean.usuario.documento}" title="Documento" required="true" requiredMessage="The Documento field is required."/>
+                                                        <h:inputText  maxlength="11" onkeypress="return valida3(event)" id="documento" class="form-control" t:placeholder="Documento" value="#{usuarioManagedBean.usuario.documento}" title="Documento" required="true" requiredMessage="The Documento field is required."/>
 
                                                     </div>
                                                 </div>
@@ -137,21 +174,37 @@
                                                     <h:outputLabel value="Genero:" for="genero" />
 
 
-                                                    
+
                                                     <h:selectOneRadio  class="divisor" id="genero" value="#{usuarioManagedBean.usuario.genero}"  title="Genero">
 
                                                         <f:selectItem  itemValue="Masculino" itemLabel="Masculino "/>
-                                                        
+
                                                         <f:selectItem  itemValue="Femenino" itemLabel="Femenino "/>
-                                                        
+
                                                         <f:selectItem  itemValue="Otro" itemLabel="Otro"/>
 
                                                     </h:selectOneRadio>
 
 
 
+
+
                                                 </div>
-                                                
+                                                <div class="col-md-6">
+                                                    <h:outputLabel value="Fecha De Nacimento:" for="fechaDeNacimento" />
+                                                 
+                                                    
+                                                    <h:selectOneMenu class="form-control" id="fechaDeNacimento" value="#{usuarioManagedBean.usuario.fechaDeNacimento}" title="FechaDeNacimento" required="true" requiredMessage="The FechaDeNacimento field is required.">
+                                                                    
+                                                                    <f:selectItem  itemValue="12/12/1980" itemLabel="Antes de 1990"/>
+                                                                    <f:selectItem  itemValue="12/12/1995" itemLabel="1990 a 2000"/>
+                                                                    <f:selectItem  itemValue="12/12/1995" itemLabel="2000 a 2012"/>
+                                                                   <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                                </h:selectOneMenu>
+                                                    
+                                                    
+                                                </div>
+
                                                 <div class="form-group" >
                                                     <div class="col-md-6">    <h:outputLabel value="Tipo de Rh:" for="rh" />
                                                         <h:selectOneMenu  class="form-control" id="rh" value="#{usuarioManagedBean.usuario.rh}" title="Rh" required="true" requiredMessage="El campo 'Motivo de pago' ">
@@ -179,18 +232,13 @@
                                                                                                         </h:inputText>
                                                                                                     </div>
                                                                                                 </div>-->
-                                                <div class="col-md-6">
-                                                    <h:outputLabel value="Fecha De Nacimento:" for="fechaDeNacimento" />
-                                                    <h:inputText  class="form-control" id="fechaDeNacimento" value="#{usuarioManagedBean.usuario.fechaDeNacimento}" title="FechaDeNacimento" required="true" requiredMessage="The FechaDeNacimento field is required.">
-                                                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                                                    </h:inputText>
-                                                </div>
+
 
 
                                                 <div class="col-md-12">
                                                     <h:outputLabel value="Correo:" for="correo" />
 
-                                                    <h:inputText t:type="email" t:placeholder="ejemplo@sucorreo.com" class="form-control" id="correo" value="#{usuarioManagedBean.usuario.correo}" title="Correo" required="true" requiredMessage="The Correo field is required."/>
+                                                    <h:inputText t:type="email" t:placeholder="ejemplo@futbolweb.com" class="form-control" id="correo" value="#{usuarioManagedBean.usuario.correo}" title="Correo" required="true" requiredMessage="The Correo field is required."/>
 
 
 
@@ -223,41 +271,61 @@
 
 
                                                 </div>
-<div class="form-group float-label-control">
+                                                
+                                                <div class=" col-md-12 form-group float-label-control">
                                                     <h:outputLabel value="Clave:" for="clave" />
-                                                    <h:inputSecret  class="form-control" id="clave" value="#{usuarioManagedBean.usuario.clave}" title="Clave" required="true" requiredMessage="The Clave field is required."/>
+                                                 
+                                               
+                                                 <h:selectOneMenu  class="form-control" id="clave" value="#{usuarioManagedBean.usuario.clave}" title="Clave" required="true" requiredMessage="The Clave field is required.">
+                                                            <f:selectItem itemValue="#{null}" itemLabel="Seleccione" />
+                                                            <f:selectItem  itemValue="Coordinador123" itemLabel="Clave para Coordinador"/>
+                                                            <f:selectItem  itemValue="Entrenador456" itemLabel="Clave para Entrenador"/>
+                                                            <f:selectItem  itemValue="Acudiente789" itemLabel="Clave para Acudiente"/>
+                                                            <f:selectItem  itemValue="Jugador321" itemLabel="Clave para Jugador"/>
+                                                            <f:selectItem  itemValue="Invitado987" itemLabel="Clave para Invitados"/>
+                                                          
+
+
+
+                                                        </h:selectOneMenu>
+                                                
+                                                
                                                 </div>
 
 
 
+   <script language="JavaScript">
+                                function confirmar2()
+                                {
+                                    if (!confirm("¿Deseas registrar este usuario?"))
+                                    {
+                                        return false;
+                                    } else
+                                    {
 
-                                                <div class="form-group float-label-control">
+                                        return true;
+                                    }
+                                }
+                            </script>
+                    
+
+  <div class=" col-md-12 form-group float-label-control">
+        <h:commandButton class="btn btn-success" onclick="javascript:return confirmar2()"  actionListener="#{usuarioManagedBean.redireccionarUsuarioCordinador()}"   value="Registrar Usuario" action="#{usuarioManagedBean.creaUsuario()}"  />
+
 
                                                 </div>
 
+                                                
 
 
-                                                <div class="form-group float-label-control">
-
-
-
-                                                </div>
-
-
-
-                                                <div class="form-group float-label-control">
-
-                                                </div>
+                                               
 
 
 
 
 
 
-
-                                                <h:commandButton class="btn btn-success"   actionListener="#{usuarioManagedBean.redireccionarUsuarioCordinador()}"   value="Registrar Usuario" action="#{usuarioManagedBean.creaUsuario()}"  />
-
-
+                                              
 
                                             </h:form>
                                         </form>

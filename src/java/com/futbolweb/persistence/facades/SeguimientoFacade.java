@@ -34,6 +34,7 @@ public class SeguimientoFacade extends AbstractFacade<Seguimiento> {
 
     public List<Seguimiento> listarSeguimientoEspecifico(Jugador j) {
         List<Seguimiento> lista;
+        getEntityManager().getEntityManagerFactory().getCache().evictAll();
         Query query = em.createQuery("SELECT s FROM Seguimiento s WHERE s.idJugador = ?1");
         query.setParameter(1, j);
         lista = query.getResultList();

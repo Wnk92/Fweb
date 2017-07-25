@@ -29,8 +29,19 @@
                             <h1 class="page-header text-center">Encuentros disputados</h1>
                         </header>
                         <center>
-                            <p>Registre los partidos jugados</p>        
+                            <img style="width: 150px; height: 150px;" src="../../resources/images/paginainicio/Logo.png" alt=""/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p>Registre los partidos jugados</p>         
                             <br></br>
+
+
+
+                        </center>
+                        <center>
+
+
 
                             <div class="container-fluid">
                                 <div class="row">
@@ -64,7 +75,7 @@
                                                             <h:outputLabel value="Torneo"/>
 
                                                             <h:selectOneMenu class="form-control" id="fkIdTorneo" value="#{encuentroTorneoManagedBean.encuentroTorneo.fkIdTorneo}" title="FkIdTorneo" required="true" requiredMessage="Campo requerido">
-                                                                 <f:selectItem itemValue="#{null}" itemLabel="--seleccione--" />
+                                                                <f:selectItem itemValue="#{null}" itemLabel="--seleccione--" />
                                                                 <!-- TODO: update below reference to list of available items-->
                                                                 <f:selectItems value="#{torneoManagedBean.listar()}" var="listor" itemLabel="#{listor.nombreTorneo}"/>
                                                             </h:selectOneMenu>
@@ -72,8 +83,38 @@
 
                                                             <h:outputLabel  value="Fecha del encuentro"/>
                                                             <br/>
+                                                            <script>
+                                                                function valida3(e) {
+                                                                    tecla = (document.all) ? e.keyCode : e.which;
 
-                                                            <h:inputText jsf:data-language='es'  class="form-control datepicker-here" id="fechaInicio" value="#{encuentroTorneoManagedBean.encuentroTorneo.fechaInicio}" title="FechaInicio" required="true" requiredMessage="Campo requerido">
+                                                                    //Tecla de retroceso para borrar, siempre la permite
+                                                                    if (tecla == 8) {
+                                                                        return true;
+                                                                    }
+
+                                                                    // Patron de entrada, en este caso solo acepta numeros
+                                                                    patron = /[0-9 / ]/;
+                                                                    tecla_final = String.fromCharCode(tecla);
+                                                                    return patron.test(tecla_final);
+                                                                }
+                                                            </script>
+                                                            <script>
+                                                                function valida33(e) {
+                                                                    tecla = (document.all) ? e.keyCode : e.which;
+
+                                                                    //Tecla de retroceso para borrar, siempre la permite
+                                                                    if (tecla == 8) {
+                                                                        return true;
+                                                                    }
+
+                                                                    // Patron de entrada, en este caso solo acepta numeros
+                                                                    patron = /[0-9]/;
+                                                                    tecla_final = String.fromCharCode(tecla);
+                                                                    return patron.test(tecla_final);
+                                                                }
+                                                            </script>
+
+                                                            <h:inputText jsf:placeholder="dd/mm/aaaa"  onkeypress="return valida3(event)" jsf:data-language='es'  class="form-control datepicker-here" id="fechaInicio" value="#{encuentroTorneoManagedBean.encuentroTorneo.fechaInicio}" title="FechaInicio" required="true" requiredMessage="Campo requerido">
                                                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                                                             </h:inputText>
 
@@ -86,7 +127,7 @@
 
                                                             <h:outputLabel value="Resultado"/>
 
-                                                            <h:inputText jsf:placeholder="0-0" onkeypress="return validar(event)"  class="form-control" value="#{encuentroTorneoManagedBean.encuentroTorneo.resultado}" title="Resultado" required="true" requiredMessage="Campo requerido"/>
+                                                            <h:inputText jsf:placeholder="0-0" onkeypress="return valida33(event)" maxlength="3"  class="form-control" value="#{encuentroTorneoManagedBean.encuentroTorneo.resultado}" title="Resultado" required="true" requiredMessage="Campo requerido"/>
 
 
 
@@ -144,7 +185,7 @@
                                         <th class="hidden-xs">Fecha</th>
 
                                         <th class="hidden-xs">Resultado</th>
-                                        
+
                                         <th class="hidden-xs">Equipo rival</th>
 
                                         <th class="hidden-xs">Torneo</th>
@@ -190,15 +231,7 @@
                                 </tbody>
                             </table>
 
-                            <br></br>
-                            <h:commandLink title="Descargar tabla en pdf">
-                                <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
-                                <p:dataExporter type="pdf" target="tabCat" fileName="ListadoDeCategorias"/>
-                            </h:commandLink>
-                            <h:commandLink title="Descargar tabla en Excel">
-                                <img  src="../../resources/images/pdf/excel.png" alt="Descargar en Ecxel" style="width: 55px; height: 55px;"/>
-                                <p:dataExporter type="xls" target="tabCat" fileName="ListadoDeCategorias"/>
-                            </h:commandLink>
+
 
                             <script language="JavaScript">
                                 function confirmar()

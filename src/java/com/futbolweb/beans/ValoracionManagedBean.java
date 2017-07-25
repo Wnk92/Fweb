@@ -154,6 +154,14 @@ public class ValoracionManagedBean implements Serializable, InterfaceController<
         val = valoracion;
         return "";
     }
+    
+       public void redireccionarValoracion() {
+
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("valoraciondesempenio.xhtml");
+        } catch (Exception e) {
+        }
+    }
 
     @Override
     public Valoracion getObjectByKey(Integer key) {

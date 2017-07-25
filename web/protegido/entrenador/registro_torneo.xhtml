@@ -36,10 +36,20 @@
                         <header>
                             <h1 class="page-header text-center">Torneos</h1>
                         </header>
-                        <center>
+                           <center>
+                             <img style="width: 150px; height: 150px;" src="../../resources/images/paginainicio/Logo.png" alt=""/>
+                            <br/>
+                            <br/>
+                            <br/>
                             <p>Registre los torneos en los cuales participará el equipo</p>        
                             <br></br>
 
+                     
+
+                        </center>
+                        <center>
+                           
+                       
 
                             
 
@@ -72,8 +82,22 @@
 
                                                             <h:outputLabel value="Inicio"/>
                                                             <br/>
+                           <script>
+                                function valida3(e) {
+                                    tecla = (document.all) ? e.keyCode : e.which;
 
-                                                            <h:inputText   jsf:data-language='es'  class="form-control datepicker-here" id="start" value="#{torneoManagedBean.torneo.fechaInicio}" title="FechaInicio" required="true" requiredMessage="The FechaInicio field is required.">
+                                    //Tecla de retroceso para borrar, siempre la permite
+                                    if (tecla == 8) {
+                                        return true;
+                                    }
+
+                                    // Patron de entrada, en este caso solo acepta numeros
+                                    patron = /[0-9 / ]/;
+                                    tecla_final = String.fromCharCode(tecla);
+                                    return patron.test(tecla_final);
+                                }
+                            </script>
+                                                            <h:inputText jsf:placeholder="dd/mm/aaaa"  onkeypress="return valida3(event)"  jsf:data-language='es'  class="form-control datepicker-here" id="start" value="#{torneoManagedBean.torneo.fechaInicio}" title="FechaInicio" required="true" requiredMessage="The FechaInicio field is required.">
                                                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                                                             </h:inputText>
 
@@ -81,7 +105,7 @@
                                                             <br/>
                                                             <h:outputLabel value="Finalización"/>
                                                             <br/>
-                                                            <h:inputText jsf:data-language='es'   class="form-control datepicker-here" id="end" value="#{torneoManagedBean.torneo.fechaFin}" title="FechaFin" required="true" requiredMessage="The FechaInicio field is required.">
+                                                            <h:inputText jsf:placeholder="dd/mm/aaaa" onkeypress="return valida3(event)" jsf:data-language='es'   class="form-control datepicker-here" id="end" value="#{torneoManagedBean.torneo.fechaFin}" title="FechaFin" required="true" requiredMessage="The FechaInicio field is required.">
                                                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                                                             </h:inputText>
 

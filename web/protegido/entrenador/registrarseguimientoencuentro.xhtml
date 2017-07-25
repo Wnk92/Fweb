@@ -22,10 +22,20 @@
                     <header>
                         <h1 class="page-header text-center">Seguimiento detallado de los partidos</h1>
                     </header>
-                    <center>
-                        <p>Registre una breve descripción de los detalles de los partidos calificando a cada jugador participante</p>        
-                        <br></br>
+                       <center>
+                             <img style="width: 150px; height: 150px;" src="../../resources/images/paginainicio/Logo.png" alt=""/>
+                            <br/>
+                            <br/>
+                            <br/>
+ <p>Registre una breve descripción de los detalles de los partidos calificando a cada jugador participante</p>        
+                      
+                            <br></br>
 
+                     
+
+                        </center>
+                    <center>
+                     
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12">
@@ -53,6 +63,10 @@
                                                         <!-- TODO: update below reference to list of available items-->
                                                         <f:selectItems value="#{encuentroTorneoManagedBean.listar()}" var="lisEnc" itemLabel="#{lisEnc.descripcion}"/>
                                                     </h:selectOneMenu>
+                                                    
+                                                     <h:outputLabel value="Equipo Rival:" for="observacion" />
+                                                    <h:inputTextarea  class="form-control"  rows="2" cols="30" id="observacion" value="#{seguimientoEncuentroManagedBean.seguimientoencuentro.observacion}" title="Observacion" required="true" requiredMessage="The Observacion field is required."/>
+
 
 
                                                     <h:outputLabel value="Jugador:" for="idJugador" />
@@ -97,9 +111,7 @@
                                                     </h:selectOneMenu>
 
 
-                                                    <h:outputLabel value="Observación:" for="observacion" />
-                                                    <h:inputTextarea  class="form-control"  rows="4" cols="30" id="observacion" value="#{seguimientoEncuentroManagedBean.seguimientoencuentro.observacion}" title="Observacion" required="true" requiredMessage="The Observacion field is required."/>
-
+                                                   
                                                     <br/>
                                                     <br/>
                                                     <p:commandButton  class="btn btn-outline btn-success" value="Registrar" actionListener="#{seguimientoEncuentroManagedBean.registrarSeguimientoEncuentro()}" />
@@ -130,11 +142,11 @@
                                 <tr >
                                     <th class="col-md-4"><center><em class="fa fa-cog">Editar/Eliminar</em></center></th>
 
-                                    <th class="hidden-xs">Observación</th>
+                                    <th class="hidden-xs">Equipo Rival</th>
 
                                     <th class="hidden-xs">Calificación</th>
 
-                                    <th class="hidden-xs">Equipo rival</th>
+                                    <th class="hidden-xs">Torneo</th>
 
                                     <th class="hidden-xs">Jugador</th>
 
@@ -174,15 +186,7 @@
 
                             </tbody>
                         </table>
-                        <br></br>
-                        <h:commandLink title="Descargar tabla en pdf">
-                            <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
-                            <p:dataExporter type="pdf" target="tabCat" fileName="ListadoDeCategorias"/>
-                        </h:commandLink>
-                        <h:commandLink title="Descargar tabla en Excel">
-                            <img  src="../../resources/images/pdf/excel.png" alt="Descargar en Ecxel" style="width: 55px; height: 55px;"/>
-                            <p:dataExporter type="xls" target="tabCat" fileName="ListadoDeCategorias"/>
-                        </h:commandLink>
+                       
 
                         <script language="JavaScript">
                             function confirmar()
