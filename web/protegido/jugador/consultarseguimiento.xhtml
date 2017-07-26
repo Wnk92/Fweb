@@ -16,6 +16,8 @@
                 <script type="text/javascript" src="../../resources/js/Chart.bundle.min.js"></script>
                 <script type="text/javascript" src="../../resources/js/Chart.js"></script>
                 <script type="text/javascript" src="../../resources/js/Chart.min.js"></script>
+                <script type="text/javascript" src="../../resources/js/canvas-toBlob.js"></script>
+                <script type="text/javascript" src="../../resources/js/FileSaver.js"></script>
 
                 <div class="rowContainer">
 
@@ -117,16 +119,7 @@
                                     </table>
                                 </h:panelGroup>
                             </h:form>
-                            <br></br>
-                            <h:commandLink title="Descargar tabla en pdf">
-                                <img  src="../../resources/images/pdf/pdf.png" alt="Descargar en Pdf" style="width: 55px; height: 55px;"/>
-                                <p:dataExporter type="pdf" target="tabCat" fileName="ListadoDeCategorias"/>
-                            </h:commandLink>
-                            <h:commandLink title="Descargar tabla en Excel">
-                                <img  src="../../resources/images/pdf/excel.png" alt="Descargar en Ecxel" style="width: 55px; height: 55px;"/>
-                                <p:dataExporter type="xls" target="tabCat" fileName="ListadoDeCategorias"/>
-                            </h:commandLink>
-
+                        
                         </div>
 
                         <div class="col-lg-1"></div>
@@ -193,7 +186,13 @@
                                     <div  class="col-lg-12">
 
                                         <canvas id="fisico" width="500" height="500"></canvas>
+                                        <h:commandButton value="Descargar"  class="form-control" id="fisi" />
                                         <script>
+                                            $('#fisi').click(function(){
+                                                $('#fisico').get(0).toBlob(function(blob){
+                                                    saveAs(blob, 'seguimiento_fisico.png')
+                                                })
+                                            })
                                             var ctx = document.getElementById("fisico").getContext('2d');
                                             var myChart = new Chart(ctx, {
                                                 type: 'bar',
@@ -259,7 +258,14 @@
 
                                     <div class="col-lg-12">
                                         <canvas id="tactico" width="500" height="500"></canvas>
+                                          <h:commandButton value="Descargar"  class="form-control" id="tact" />
+                                      
                                         <script>
+                                             $('#tact').click(function(){
+                                                $('#tactico').get(0).toBlob(function(blob){
+                                                    saveAs(blob, 'seguimiento_tactico.png')
+                                                })
+                                            })
                                             var ctx = document.getElementById("tactico").getContext('2d');
                                             var myChart = new Chart(ctx, {
                                                 type: 'bar',
@@ -324,7 +330,14 @@
 
                                     <div class="col-lg-12">
                                         <canvas id="Psicologico" width="500" height="500"></canvas>
+                                          <h:commandButton value="Descargar"  class="form-control" id="phisi" />
+                                      
                                         <script>
+                                             $('#phisi').click(function(){
+                                                $('#Psicologico').get(0).toBlob(function(blob){
+                                                    saveAs(blob, 'seguimiento_phisicologico.png')
+                                                })
+                                            })
                                             var ctx = document.getElementById("Psicologico").getContext('2d');
                                             var myChart = new Chart(ctx, {
                                                 type: 'bar',
@@ -390,7 +403,14 @@
 
                                     <div class="col-lg-12">
                                         <canvas id="tecnico" width="500" height="500"></canvas>
+                                          <h:commandButton value="Descargar"  class="form-control" id="tecni" />
+                                      
                                         <script>
+                                             $('#tecni').click(function(){
+                                                $('#tecnico').get(0).toBlob(function(blob){
+                                                    saveAs(blob, 'seguimiento_tecnico.png')
+                                                })
+                                            })
                                             var ctx = document.getElementById("tecnico").getContext('2d');
                                             var myChart = new Chart(ctx, {
                                                 type: 'bar',
